@@ -1,0 +1,6 @@
+# HR Harness run — confidential, not committed
+output/run_20260321_hr_harness/
+input_hr_harness.yaml
+
+# NeoEmployee run (run_20260321_170453) is intentionally included
+# as a reference example for course participants

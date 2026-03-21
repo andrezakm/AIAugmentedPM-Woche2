@@ -1,0 +1,88 @@
+# EVAL — Business Case Input
+# Last updated: 2026-03-21
+
+company:
+  name: "NeoEmployee"
+  description: |
+    NeoEmployee builds custom AI agents that replace employees or employee skills within
+    organizations. We engage as consultants: identify operational bottlenecks and skill gaps,
+    then build custom AI agents tailored to those gaps.
+    14 people total. Fully bootstrapped — no investors, no bank credits. Revenue = runway.
+    2 people dedicated to pattern recognition across client base to find reusable agent patterns
+    that can become future products.
+    Business model today: time & material, fully custom per client. No off-the-shelf products yet.
+    Core strength: operational AI agent implementation in real companies, deep understanding of
+    where automation actually breaks down in practice, pattern recognition across industries.
+    Growing inbound pipeline — increasingly receiving requests from HR departments.
+  tech_stack:
+    - "N8n (primary agent orchestration)"
+    - "Claude API (Anthropic)"
+    - "OpenAI API"
+    - "Python (primary language)"
+    - "Custom orchestration runtimes built as needed per project"
+
+strategy:
+  direction: |
+    Horizon 1 (now): Custom AI agent consultancy on T&M basis — revenue generation and
+    real-world pattern collection. Build whatever pays and fits the vision.
+    Horizon 2 (goal): Product company — AI agents that are not custom-built for a single
+    client but deployable across many companies without custom development.
+    The bridge: pattern recognition across our client engagements to identify agent types
+    that recur across industries and can become standalone, scalable products.
+    Current bet: HR-sector engagements may reveal the first cross-industry product pattern —
+    specifically around pre-processing and operational productivity workflows.
+  constraints:
+    - "No external funding — no investor rounds, no bank credits, no dilution"
+    - "Revenue is runway — every engagement must generate positive cash flow"
+    - "Vision filter — only pursue work within AI agents replacing employee skills"
+    - "DACH-first (Germany primary, neighboring regions secondary) — no international go-to-market currently"
+    - "No pure enterprise sales motion — deep trust-building cycles with large enterprises are
+      currently too slow and GDPR/data-access friction is a known blocker"
+
+business_case:
+  topic: |
+    NeoEmployee is receiving increasing inbound requests from HR departments at mid-size and
+    large German companies. The demand signal is clear, but the strategic question is unresolved:
+    Can we build AI agents for HR that function as cross-industry "painkillers" — solving
+    urgent, recurring operational problems — in a way that translates into scalable products
+    (Horizon 2), rather than just another set of custom one-offs?
+    Specifically: which HR problems are real enough and frequent enough to justify the investment?
+    And critically — what are the technical realities of data access from adjacent systems
+    (HRIS, ATS, payroll, etc.) that will determine what is actually buildable at scale?
+  solution_direction: |
+    The hypothesis: AI agents for standard, high-volume HR pre-processing workflows are the
+    right entry point — not strategic HR, but the repetitive operational tasks HR teams do daily.
+    Working assumption: the more standard and basic the workflow, the higher the current demand.
+
+    Observed demand clusters (in priority order, highest to lowest inbound):
+    1. Recruiting Automation — CV-screening, candidate matching, job ad generation
+       (highest demand, most concrete, most likely to be cross-industry)
+    2. HR Operations & Self-Service — onboarding workflows, HR chatbot/assistant
+       (strong demand, broad applicability across company sizes)
+    3. People Analytics — retention risk, performance analysis, D&I reporting
+       (moderate demand, more data-intensive, potentially more custom)
+    4. Learning & Development — skill-gap analysis
+       (lowest demand, considered visionary/future, not the entry point)
+
+    Key open questions for this analysis:
+    1. Which of the top-demand clusters (Recruiting, HR Ops) has the best cross-industry
+       product potential vs. being stuck as custom-per-client?
+    2. What are the documented technical integration hurdles for each cluster?
+       Which HR/ATS/HRIS systems expose good APIs — and which are walled gardens?
+       (NeoEmployee has limited direct experience here; research should surface documented reality)
+    3. For the highest-demand workflows: where exactly does GDPR create hard blockers
+       vs. manageable compliance requirements?
+    4. Is the ICP better at mid-size (less friction) or large enterprise (more budget)?
+  target_market: |
+    Primary signal: mid-size German companies (200–2000 employees) with internal HR teams.
+    Secondary signal: large enterprises (2000+ employees) — growing inquiry volume but
+    known friction around GDPR, data trust, and complex system integration.
+    Working assumption: the ideal ICP for a scalable product is in the mid-market where
+    pain is real, budget exists, and data access is less politically complex.
+    One output of this analysis should be a well-reasoned, specific ICP recommendation.
+
+run_options:
+  debate_rounds: 1        # 1 or 2
+  research_depth: "deep"  # "quick" (3 searches/agent) | "deep" (6 searches/agent)
+  language: "en"          # Research and output in English
+  mode: "step"            # "step" (pause after each phase) | "auto" (fully automatic)

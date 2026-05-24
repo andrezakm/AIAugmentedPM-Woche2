@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<title>Eval — Flow Übersicht · Woche 2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400;1,9..144,700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --color-ink:    #0B0B0B;
+    --color-paper:  #F4EFE6;
+    --color-blue:   #1A4FFF;
+    --color-yellow: #FFD400;
+    --rule:         rgba(11,11,11,.16);
+    --rule-ink:     rgba(244,239,230,.18);
+    --mute:         rgba(11,11,11,.55);
+    --mute-ink:     rgba(244,239,230,.55);
+    --font-display: "Big Shoulders Display", Impact, sans-serif;
+    --font-serif:   "Fraunces", Georgia, serif;
+    --font-sans:    "Space Grotesk", -apple-system, sans-serif;
+    --font-mono:    ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--color-blue); color: var(--color-paper); }
+  a { color: var(--color-blue); }
+
+  /* ----- TOP STRIP ----- */
+  .strip { background: var(--color-ink); color: var(--color-paper); padding: 14px 48px; display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .strip .num { background: var(--color-blue); color: var(--color-paper); padding: 3px 8px; font-weight: 700; }
+
+  /* ----- HERO ----- */
+  .hero { padding: 96px 48px 64px; max-width: 1280px; margin: 0 auto; }
+  .eyebrow { display: flex; align-items: center; gap: 16px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mute); margin-bottom: 36px; }
+  .eyebrow .num { background: var(--color-blue); color: var(--color-paper); padding: 3px 8px; font-weight: 700; }
+  .eyebrow .rule { flex: 1; height: 1px; background: var(--rule); }
+  h1.title { margin: 0; font-family: var(--font-display); font-weight: 900; font-size: clamp(72px, 11vw, 168px); line-height: 0.88; letter-spacing: -0.02em; }
+  h1.title em { font-family: var(--font-serif); font-weight: 400; font-style: italic; }
+  .lede { margin: 36px 0 0; max-width: 820px; font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 26px; line-height: 1.4; }
+  .meta-row { margin-top: 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .meta-row > div { padding: 18px 0; border-right: 1px solid var(--rule); }
+  .meta-row > div:last-child { border-right: 0; }
+  .meta-row .k { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute); }
+  .meta-row .v { margin-top: 6px; font-family: var(--font-display); font-weight: 800; font-size: 38px; line-height: 1; letter-spacing: -0.01em; }
+
+  /* ----- SECTIONS ----- */
+  section.phase { padding: 80px 48px; max-width: 1280px; margin: 0 auto; border-top: 1px solid var(--rule); }
+  section.phase.ink { background: var(--color-ink); color: var(--color-paper); max-width: none; margin: 0; padding: 80px 48px; }
+  section.phase.ink .inner { max-width: 1280px; margin: 0 auto; }
+  section.phase.ink .eyebrow { color: var(--mute-ink); }
+  section.phase.ink .eyebrow .rule { background: var(--rule-ink); }
+  section.phase.ink .eyebrow .num { background: var(--color-yellow); color: var(--color-ink); }
+  section.phase.ink h2 em { color: var(--color-yellow); }
+
+  h2.phase-title { margin: 0; font-family: var(--font-display); font-weight: 900; font-size: clamp(48px, 6vw, 88px); line-height: 0.92; letter-spacing: -0.015em; }
+  h2.phase-title em { font-family: var(--font-serif); font-weight: 400; font-style: italic; color: var(--color-blue); }
+  .phase-lede { margin: 20px 0 0; max-width: 720px; font-size: 18px; line-height: 1.55; }
+  .phase-meta { margin-top: 12px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute); }
+  section.phase.ink .phase-meta { color: var(--mute-ink); }
+
+  /* ----- AGENT GRID ----- */
+  .agents { margin-top: 48px; display: grid; gap: 24px; }
+  .agents.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .agents.cols-5 { grid-template-columns: repeat(5, 1fr); }
+  .agents.cols-1 { grid-template-columns: 1fr; max-width: 720px; }
+
+  .agent { background: var(--color-paper); color: var(--color-ink); border: 1px solid var(--color-ink); padding: 24px 24px 28px; display: flex; flex-direction: column; gap: 14px; min-height: 220px; }
+  section.phase.ink .agent { box-shadow: 6px 6px 0 var(--color-blue); }
+  .agent .tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute); }
+  .agent .name { font-family: var(--font-display); font-weight: 800; font-size: 28px; line-height: 1; letter-spacing: -0.01em; }
+  .agent .desc { font-size: 14px; line-height: 1.5; flex: 1; }
+  .agent .out { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--color-blue); border-top: 1px solid var(--rule); padding-top: 12px; word-break: break-all; }
+
+  /* ----- DEBATE / MODERATOR ----- */
+  .moderator { margin-top: 32px; background: var(--color-yellow); color: var(--color-ink); padding: 32px 36px; border: 1px solid var(--color-ink); display: grid; grid-template-columns: 1fr 2fr; gap: 32px; align-items: center; }
+  .moderator .label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .moderator .big { margin-top: 6px; font-family: var(--font-display); font-weight: 900; font-size: 56px; line-height: 0.95; letter-spacing: -0.01em; }
+  .moderator .big em { font-family: var(--font-serif); font-style: italic; font-weight: 400; }
+  .moderator p { margin: 0; font-size: 15px; line-height: 1.5; }
+
+  /* ----- DECISION GATE ----- */
+  .gate { margin-top: 32px; padding: 18px 24px; border: 2px dashed var(--color-ink); display: flex; gap: 16px; align-items: baseline; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+  section.phase.ink .gate { border-color: var(--color-paper); color: var(--color-paper); }
+  .gate strong { font-family: var(--font-display); font-weight: 800; letter-spacing: 0.02em; font-size: 16px; }
+
+  /* ----- FINAL REPORT BLOCK ----- */
+  .final { margin-top: 48px; background: var(--color-blue); color: var(--color-paper); padding: 56px 48px; }
+  .final .label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .final h3 { margin: 8px 0 24px; font-family: var(--font-display); font-weight: 900; font-size: 72px; line-height: 0.9; letter-spacing: -0.015em; }
+  .final h3 em { font-family: var(--font-serif); font-style: italic; font-weight: 400; }
+  .final .verdicts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid rgba(244,239,230,.3); border-bottom: 1px solid rgba(244,239,230,.3); }
+  .final .verdicts > div { padding: 18px 16px; border-right: 1px solid rgba(244,239,230,.3); font-family: var(--font-display); font-weight: 800; font-size: 22px; letter-spacing: 0.02em; text-transform: uppercase; }
+  .final .verdicts > div:last-child { border-right: 0; }
+  .final .verdicts .sub { display: block; font-family: var(--font-mono); font-weight: 400; font-size: 10px; letter-spacing: 0.16em; margin-top: 4px; color: rgba(244,239,230,.7); text-transform: uppercase; }
+
+  /* ----- ARROW BAND ----- */
+  .arrow { padding: 28px 48px; display: flex; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 56px; color: var(--color-blue); line-height: 1; }
+  section.phase.ink + .arrow { background: var(--color-ink); color: var(--color-yellow); }
+
+  /* ----- OUTPUT FILES ----- */
+  .files { margin-top: 48px; background: var(--color-ink); color: var(--color-paper); padding: 36px 40px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; }
+  .files .filename { color: var(--color-yellow); }
+  .files .comment { color: var(--mute-ink); }
+
+  /* ----- INSIGHT QUOTES ----- */
+  .insights { padding: 96px 48px; max-width: 1280px; margin: 0 auto; border-top: 1px solid var(--rule); }
+  .insights-grid { margin-top: 48px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .insight { padding: 32px; border: 1px solid var(--color-ink); background: var(--color-paper); }
+  .insight .n { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-blue); }
+  .insight h4 { margin: 12px 0 16px; font-family: var(--font-display); font-weight: 800; font-size: 28px; line-height: 1.05; letter-spacing: -0.01em; }
+  .insight p { margin: 0; font-size: 15px; line-height: 1.55; }
+  .insight p + p { margin-top: 12px; }
+
+  /* ----- FOOTER ----- */
+  footer { background: var(--color-ink); color: var(--color-paper); padding: 56px 48px 28px; margin-top: 96px; }
+  footer .pitch { font-family: var(--font-display); font-weight: 900; font-size: 32px; line-height: 1; letter-spacing: -0.01em; max-width: 600px; }
+  footer .pitch em { font-family: var(--font-serif); font-style: italic; font-weight: 400; }
+  footer .legal { margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--rule-ink); display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute-ink); }
+
+  @media (max-width: 980px) {
+    .agents.cols-3, .agents.cols-5 { grid-template-columns: 1fr 1fr; }
+    .moderator { grid-template-columns: 1fr; }
+    .meta-row { grid-template-columns: 1fr 1fr; }
+    .meta-row > div:nth-child(2) { border-right: 0; }
+    .meta-row > div:nth-child(1), .meta-row > div:nth-child(2) { border-bottom: 1px solid var(--rule); }
+    .final .verdicts { grid-template-columns: 1fr 1fr; }
+    .insights-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .agents.cols-3, .agents.cols-5 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP STRIP -->
+<div class="strip">
+  <span><span class="num">§ WOCHE 02</span>&nbsp;&nbsp;AI-Augmented PM · Eval-System</span>
+  <span>Flow-Übersicht · Mai 2026</span>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="eyebrow">
+    <span class="num">§ 00</span>
+    <span>System</span>
+    <span class="rule"></span>
+    <span>Multi-Agent Business Case Analyse</span>
+  </div>
+  <h1 class="title">Eval —<br/>ein <em>Business-Case</em><br/>im Akkord.</h1>
+  <p class="lede">
+    Ein Input. Bis zu 20 Agenten in Folge. Zehn Markdown-Dokumente.
+    Ein finaler Report mit Empfehlung. Alles in Claude Code, vollständig beobachtbar.
+  </p>
+
+  <div class="meta-row">
+    <div>
+      <div class="k">Phasen</div>
+      <div class="v">6</div>
+    </div>
+    <div>
+      <div class="k">Agenten · 1 Runde</div>
+      <div class="v">13</div>
+    </div>
+    <div>
+      <div class="k">Agenten · 2 Runden</div>
+      <div class="v">20</div>
+    </div>
+    <div>
+      <div class="k">Token-Budget · Run</div>
+      <div class="v">~10 €</div>
+    </div>
+  </div>
+</header>
+
+<!-- INPUT -->
+<section class="phase">
+  <div class="eyebrow">
+    <span class="num">§ 00</span>
+    <span>Input</span>
+    <span class="rule"></span>
+    <span>YAML · Markdown</span>
+  </div>
+  <h2 class="phase-title">Der <em>Business&#8209;Case</em>.</h2>
+  <p class="phase-lede">
+    Du beschreibst das Vorhaben in einer YAML-Datei — gefüttert von <code style="font-family:var(--font-mono);font-size:14px;background:rgba(11,11,11,.06);padding:2px 6px;">company.md</code>
+    und <code style="font-family:var(--font-mono);font-size:14px;background:rgba(11,11,11,.06);padding:2px 6px;">strategy.md</code>.
+    Je dichter dein Input, desto weniger Lücken muss das System später füllen.
+  </p>
+  <p class="phase-meta">input.yaml · company.md · strategy.md</p>
+</section>
+
+<div class="arrow">↓</div>
+
+<!-- PHASE 1 -->
+<section class="phase ink">
+  <div class="inner">
+    <div class="eyebrow">
+      <span class="num">§ 01</span>
+      <span>Phase 1 · Research</span>
+      <span class="rule"></span>
+      <span>3 parallele Agenten · 6–26 Web-Suchen je Agent</span>
+    </div>
+    <h2 class="phase-title">Drei <em>Späher</em>,<br/>parallel.</h2>
+    <p class="phase-lede">
+      Drei Background-Agenten ziehen gleichzeitig los: Marktdaten, Technologie-Landschaft, Kundenprobleme.
+      Jeder schreibt sein eigenes Markdown-Dokument. Sie wissen nichts voneinander.
+    </p>
+
+    <div class="agents cols-3">
+      <div class="agent">
+        <div class="tag">Agent 1 · Market</div>
+        <div class="name">Market<br/>Research</div>
+        <div class="desc">Marktgröße, Segmente, ICP-Kandidaten, Wettbewerber. Externe Web-Recherche, kein internes Wissen.</div>
+        <div class="out">→ research_market.md</div>
+      </div>
+      <div class="agent">
+        <div class="tag">Agent 2 · Technology</div>
+        <div class="name">Technology<br/>Research</div>
+        <div class="desc">Verfügbare Bausteine, Modelle, Frameworks, Build-vs-Buy, Reifegrad relevanter Technologie.</div>
+        <div class="out">→ research_technology.md</div>
+      </div>
+      <div class="agent">
+        <div class="tag">Agent 3 · Problems</div>
+        <div class="name">Problem<br/>Research</div>
+        <div class="desc">Welche Probleme hat der adressierte Markt heute? Wo brennt es konkret? Was ist gut dokumentiert, was nicht?</div>
+        <div class="out">→ research_problems.md</div>
+      </div>
+    </div>
+
+    <div class="gate">
+      <strong>Step-Mode</strong>
+      <span>Pause. Lesen. Weitermachen — oder anhalten.</span>
+    </div>
+  </div>
+</section>
+
+<div class="arrow">↓</div>
+
+<!-- PHASE 2 -->
+<section class="phase">
+  <div class="eyebrow">
+    <span class="num">§ 02</span>
+    <span>Phase 2 · Status Quo</span>
+    <span class="rule"></span>
+    <span>1 Agent · sequenziell</span>
+  </div>
+  <h2 class="phase-title">Ein <em>Status&#8209;Quo</em>.</h2>
+  <p class="phase-lede">
+    Ein Agent liest alle drei Research-Dokumente und schreibt eine konsolidierte Analyse:
+    was wir wissen, was wir nicht wissen, welche Lücken kritisch sind.
+  </p>
+  <div class="agents cols-1">
+    <div class="agent">
+      <div class="tag">Sequential · liest 3 Files</div>
+      <div class="name">Status&#8209;Quo<br/>Analysis</div>
+      <div class="desc">Synthese aus Markt, Technologie und Problemen. Nennt explizit blinde Flecken und unbeantwortete Fragen.</div>
+      <div class="out">→ analysis_status_quo.md</div>
+    </div>
+  </div>
+</section>
+
+<div class="arrow">↓</div>
+
+<!-- PHASE 3 -->
+<section class="phase ink">
+  <div class="inner">
+    <div class="eyebrow">
+      <span class="num">§ 03</span>
+      <span>Phase 3 · Hypothesen</span>
+      <span class="rule"></span>
+      <span>3 parallele Agenten</span>
+    </div>
+    <h2 class="phase-title">Drei <em>Hypothesen</em>,<br/>unabhängig.</h2>
+    <p class="phase-lede">
+      Drei Agenten bauen jeweils eine Hypothese — wieder parallel und voneinander entkoppelt.
+      Lösung, Technologie, Business-Modell. Bewusst getrennt, damit kein Agent den anderen biased.
+    </p>
+
+    <div class="agents cols-3">
+      <div class="agent">
+        <div class="tag">Hypothese 1 · Solution</div>
+        <div class="name">Solution<br/>Hypothesis</div>
+        <div class="desc">Wie könnte ein Produkt aussehen, das diese Probleme in diesem Markt löst?</div>
+        <div class="out">→ hypothesis_solution.md</div>
+      </div>
+      <div class="agent">
+        <div class="tag">Hypothese 2 · Technology</div>
+        <div class="name">Technology<br/>Hypothesis</div>
+        <div class="desc">Welcher Tech-Stack, welche Architektur, welche Build-Reihenfolge ist realistisch?</div>
+        <div class="out">→ hypothesis_technology.md</div>
+      </div>
+      <div class="agent">
+        <div class="tag">Hypothese 3 · Business</div>
+        <div class="name">Business&#8209;Model<br/>Hypothesis</div>
+        <div class="desc">Wie verdient das Produkt Geld? Pricing, Vertriebsweg, ICP-Schwelle, Margen.</div>
+        <div class="out">→ hypothesis_business_model.md</div>
+      </div>
+    </div>
+
+    <div class="gate">
+      <strong>Step-Mode</strong>
+      <span>Pause. Drei Hypothesen liegen auf dem Tisch. Weiter zur Debatte?</span>
+    </div>
+  </div>
+</section>
+
+<div class="arrow">↓</div>
+
+<!-- PHASE 4 ROUND 1 -->
+<section class="phase">
+  <div class="eyebrow">
+    <span class="num">§ 04 · R1</span>
+    <span>Phase 4 · Debatte Runde 1</span>
+    <span class="rule"></span>
+    <span>5 Personas + 1 Moderator</span>
+  </div>
+  <h2 class="phase-title">Fünf <em>Stimmen</em>,<br/>ein Tisch.</h2>
+  <p class="phase-lede">
+    Fünf Agenten lesen alle Hypothesen — jeder mit einer eigenen Perspektive — und schreiben ihre Stellungnahme
+    in eine geteilte Datei. Ein Moderator liest am Ende alles und schreibt die Synthese.
+  </p>
+
+  <div class="agents cols-5">
+    <div class="agent">
+      <div class="tag">Persona 1</div>
+      <div class="name">Optimist</div>
+      <div class="desc">Was spricht dafür? Welche Chancen werden unterschätzt?</div>
+      <div class="out">→ debate_round_1.md</div>
+    </div>
+    <div class="agent">
+      <div class="tag">Persona 2</div>
+      <div class="name">Kritiker</div>
+      <div class="desc">Wo sind die Risiken, blinde Flecken, übersehene Annahmen?</div>
+      <div class="out">→ debate_round_1.md</div>
+    </div>
+    <div class="agent">
+      <div class="tag">Persona 3</div>
+      <div class="name">Techniker</div>
+      <div class="desc">Was ist technisch realistisch, was ist Wunschdenken?</div>
+      <div class="out">→ debate_round_1.md</div>
+    </div>
+    <div class="agent">
+      <div class="tag">Persona 4</div>
+      <div class="name">Markt&#8209;Experte</div>
+      <div class="desc">Was zahlen Kunden tatsächlich? Welche Vertriebsdynamik ist plausibel?</div>
+      <div class="out">→ debate_round_1.md</div>
+    </div>
+    <div class="agent">
+      <div class="tag">Persona 5</div>
+      <div class="name">Stratege</div>
+      <div class="desc">Passt das zum Firmenprofil, zur Strategie, zur Run-Rate?</div>
+      <div class="out">→ debate_round_1.md</div>
+    </div>
+  </div>
+
+  <div class="moderator">
+    <div>
+      <div class="label">Moderator · R1</div>
+      <div class="big">Synthese &<br/><em>Empfehlung</em>.</div>
+    </div>
+    <p>
+      Der Moderator liest die fünf Stellungnahmen, identifiziert die schärfsten Konflikte und schreibt eine
+      Synthese. Anschließend gibt er eine Empfehlung: nochmal in Runde 2 — oder fertig?
+    </p>
+  </div>
+
+  <div class="gate">
+    <strong>Decision</strong>
+    <span>R2 starten? &nbsp; · &nbsp; Ja → Phase 4 R2 &nbsp; · &nbsp; Nein → Phase 5</span>
+  </div>
+</section>
+
+<div class="arrow">↓</div>
+
+<!-- PHASE 4 ROUND 2 -->
+<section class="phase ink">
+  <div class="inner">
+    <div class="eyebrow">
+      <span class="num">§ 04 · R2</span>
+      <span>Phase 4 · Debatte Runde 2 (optional)</span>
+      <span class="rule"></span>
+      <span>Fokus auf offene Konflikte</span>
+    </div>
+    <h2 class="phase-title">Nochmal — <em>schärfer</em>.</h2>
+    <p class="phase-lede">
+      Dieselben fünf Personas, aber jetzt fokussiert auf die ungelösten Fragen aus R1.
+      Kein zweiter Komplettdurchlauf — gezielte Schärfung dort, wo R1 nicht konvergiert ist.
+    </p>
+
+    <div class="agents cols-5">
+      <div class="agent"><div class="tag">R2</div><div class="name">Optimist</div><div class="desc">Adressiert Kritiker- und Strategen-Punkte aus R1.</div><div class="out">→ debate_round_2.md</div></div>
+      <div class="agent"><div class="tag">R2</div><div class="name">Kritiker</div><div class="desc">Vertieft die schärfsten offenen Risiken.</div><div class="out">→ debate_round_2.md</div></div>
+      <div class="agent"><div class="tag">R2</div><div class="name">Techniker</div><div class="desc">Klärt technische Detailfragen aus R1.</div><div class="out">→ debate_round_2.md</div></div>
+      <div class="agent"><div class="tag">R2</div><div class="name">Markt</div><div class="desc">Präzisiert ICP, Pricing, Break-Even.</div><div class="out">→ debate_round_2.md</div></div>
+      <div class="agent"><div class="tag">R2</div><div class="name">Stratege</div><div class="desc">Sortiert die Empfehlung in den Firmenkontext ein.</div><div class="out">→ debate_round_2.md</div></div>
+    </div>
+
+    <div class="moderator">
+      <div>
+        <div class="label">Moderator · R2</div>
+        <div class="big">Finale<br/><em>Synthese</em>.</div>
+      </div>
+      <p>
+        Zweite Synthese — diesmal mit dem Auftrag, die offenen Konflikte zu schließen oder als
+        explizit ungelöste Fragen zu markieren. Übergibt an die Final-Report-Phase.
+      </p>
+    </div>
+
+    <div class="gate">
+      <strong>Step-Mode</strong>
+      <span>Pause. Bereit für den Final Report?</span>
+    </div>
+  </div>
+</section>
+
+<div class="arrow">↓</div>
+
+<!-- PHASE 5 FINAL -->
+<section class="phase">
+  <div class="eyebrow">
+    <span class="num">§ 05</span>
+    <span>Phase 5 · Final Report</span>
+    <span class="rule"></span>
+    <span>1 Agent · liest alle 9 Files</span>
+  </div>
+  <h2 class="phase-title">Der <em>Bericht</em>.</h2>
+  <p class="phase-lede">
+    Ein Agent liest alle bisherigen Dokumente und schreibt den finalen Report:
+    Empfehlung, Scorecard, offene Fragen, Next Steps.
+  </p>
+
+  <div class="final">
+    <div class="label">Final Report — Verdict-Spektrum</div>
+    <h3>Go. Conditional&nbsp;Go.<br/><em>Pivot. No&#8209;Go.</em></h3>
+    <div class="verdicts">
+      <div>GO <span class="sub">Klar nach vorne</span></div>
+      <div>CONDITIONAL <span class="sub">Bedingungen erfüllen</span></div>
+      <div>PIVOT <span class="sub">Richtung ändern</span></div>
+      <div>NO&#8209;GO <span class="sub">Nicht verfolgen</span></div>
+    </div>
+    <p style="margin-top:24px;font-family:var(--font-serif);font-style:italic;font-size:20px;line-height:1.4;max-width:760px;">
+      Plus: Scorecard nach Marktattraktivität, technischer Machbarkeit, strategischem Fit und
+      Business-Modell — sowie eine Liste der Fragen, die du als Nächstes klären solltest.
+    </p>
+  </div>
+
+  <div class="files">
+    <div><span class="comment"># Output eines Runs · eval/output/run_YYYYMMDD_HHMMSS/</span></div>
+    <div><span class="filename">research_market.md</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">Phase 1</span></div>
+    <div><span class="filename">research_technology.md</span>&nbsp;&nbsp;<span class="comment">Phase 1</span></div>
+    <div><span class="filename">research_problems.md</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">Phase 1</span></div>
+    <div><span class="filename">analysis_status_quo.md</span>&nbsp;&nbsp;<span class="comment">Phase 2</span></div>
+    <div><span class="filename">hypothesis_solution.md</span>&nbsp;&nbsp;<span class="comment">Phase 3</span></div>
+    <div><span class="filename">hypothesis_technology.md</span><span class="comment">&nbsp;Phase 3</span></div>
+    <div><span class="filename">hypothesis_business_model.md</span>&nbsp;<span class="comment">Phase 3</span></div>
+    <div><span class="filename">debate_round_1.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">Phase 4 · R1</span></div>
+    <div><span class="filename">debate_round_2.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">Phase 4 · R2 (optional)</span></div>
+    <div><span class="filename">final_report.md</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">Phase 5</span></div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section class="insights">
+  <div class="eyebrow">
+    <span class="num">§ 06</span>
+    <span>Erkenntnisse aus den Runs</span>
+    <span class="rule"></span>
+    <span>Was wirklich passiert</span>
+  </div>
+  <h2 class="phase-title" style="margin-top:24px;">Was du <em>mitnehmen</em><br/>solltest.</h2>
+
+  <div class="insights-grid">
+    <div class="insight">
+      <div class="n">§ 06.01</div>
+      <h4>Zerlegung schlägt Größe.</h4>
+      <p>Halluzinationen entstehen aus zu vielen Lücken im Kontext oder aus zu viel Kontext gleichzeitig. Beides wird gedämpft, wenn man eine Aufgabe in viele kleine, fokussierte Sub-Aufgaben zerlegt.</p>
+      <p>Eval funktioniert nicht, weil es ein großes Modell ist. Es funktioniert, weil jeder Agent eine kleine Aufgabe mit dichtem Kontext hat.</p>
+    </div>
+    <div class="insight">
+      <div class="n">§ 06.02</div>
+      <h4>Dein Input ist der Hebel.</h4>
+      <p>Lücken im <code style="font-family:var(--font-mono);font-size:13px;background:rgba(11,11,11,.06);padding:2px 6px;">company.md</code> oder <code style="font-family:var(--font-mono);font-size:13px;background:rgba(11,11,11,.06);padding:2px 6px;">strategy.md</code> werden später zu Halluzinationen — meist genau dort, wo es kommerziell relevant wird (ICP-Schwelle, Run-Rate, Margen).</p>
+      <p>Investiere die Zeit vor dem Run, nicht im Run.</p>
+    </div>
+    <div class="insight">
+      <div class="n">§ 06.03</div>
+      <h4>Fakten ja, Meinungen nein.</h4>
+      <p>Im Step-Mode bist du versucht, Zwischenstände zu „korrigieren". Tu's nicht — außer es sind harte Fakten, die du am Anfang vergessen hast.</p>
+      <p>Meinungen verzerren den Output. Übersehene Fakten klären ihn.</p>
+    </div>
+    <div class="insight">
+      <div class="n">§ 06.04</div>
+      <h4>Tiefe statt Wahrheit.</h4>
+      <p>Der Final Report ist keine Wahrheit. Er ist die beste Diskussionsgrundlage, mit der du morgen ein ernsthaftes Meeting starten kannst — auf einem Niveau, das sonst Beratungen liefern.</p>
+      <p>Behandle ihn als <em>erste Vorlage</em>, nicht als Antwort.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="pitch">Eval ist ein <em>Token&#8209;Monster</em>.<br/>Aber eines, das liefert.</div>
+  <div class="legal">
+    <span>überproduct · AI-Augmented PM · Woche 02</span>
+    <span>Mai 2026 · v1</span>
+  </div>
+</footer>
+
+</body>
+</html>

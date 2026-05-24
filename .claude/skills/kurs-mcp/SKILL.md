@@ -255,11 +255,3 @@ Offene Fragen und Setup-Probleme: bring sie in den nächsten Call.
 ---
 
 **Kurs MCP abgeschlossen.**
-
----
-
-## Zusatzmaterial
-
-- `MCPKonnektorenDoc.md` — Die vier Stufen von einfach zu komplex als Referenz zum Nachschlagen
-- `ClaudeRemoteDoc.md` — Remote Interfaces: Channels (Telegram/Discord/iMessage), Remote Control, Computer Use
-- `SkillsAgentsDoc.md` — Taxonomie Skills vs. Agents: wann welche Ebene?

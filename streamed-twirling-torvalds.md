@@ -1,5 +1,7 @@
 # Plan: Eval — Business Case Research & Analysis System
 
+> **Historische Notiz:** Dieser Plan ist das Original vom Bau des Systems (März 2026) — so, wie es im Video „Das Monster bauen" entsteht. Seitdem wurde die Struktur umgebaut: Der Ordner `eval/` ist jetzt das Wurzelverzeichnis, `prompts/` heißt `scripts/`, `input.yaml` liegt in `input/`, `company.md` und `strategy.md` in `context/`, und fertige Beispiel-Läufe liegen in `results/`. Die Logik ist unverändert.
+
 ## Context
 
 Der Nutzer möchte ein mehrstufiges, agentenbasiertes Analyse-System für Business Cases aufbauen. Es soll:

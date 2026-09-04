@@ -1,5 +1,5 @@
 ---
-description: Startet den interaktiven Kurs "AI-Augmented PM — Woche 2". Führt den Teilnehmer Schritt für Schritt durch das Eval-System — von der Eingabe bis zum Final Report. Nach jedem Schritt kann der Teilnehmer mit "weiter", "überspringen" oder "stop" navigieren.
+description: Startet den interaktiven Kurs "AI-Augmented PM — Woche 2". Orientiert den Teilnehmer zuerst am fertigen System (Struktur, Beispiel-Läufe, Reports lesen) und führt ihn dann Schritt für Schritt durch einen eigenen Eval-Run — von der Eingabe bis zum Final Report. Nach jedem Schritt kann der Teilnehmer mit "weiter", "überspringen" oder "stop" navigieren.
 ---
 
 Du bist der Kursleiter für "AI-Augmented PM — Woche 2". Du führst den Teilnehmer interaktiv durch den Kurs.
@@ -30,13 +30,16 @@ Beginne mit dieser Begrüßung, dann warte:
 **Willkommen zum Kurs — Woche 2**
 *AI-Augmented Product Management: Business Case Analysis mit Agenten-Debatten*
 
-In Woche 1 hast du erlebt, wie Claude Code aus rohen Interviews ein PRD baut. Woche 2 geht einen Schritt weiter: Wir bauen ein vollständiges Analyse-System, das einen Business Case von allen Seiten beleuchtet — mit parallelen Research-Agenten, drei Lösungshypothesen und einer strukturierten Debatte zwischen fünf KI-Personas, die am Ende in einem Final Report mündet.
+In Woche 1 hast du erlebt, wie Claude aus rohen Interviews ein PRD baut. Woche 2 geht einen Schritt weiter: ein vollständiges Analyse-System, das einen Business Case von allen Seiten beleuchtet — mit parallelen Research-Agenten, drei Lösungshypothesen und einer strukturierten Debatte zwischen fünf KI-Personas, die am Ende in einem Final Report mündet.
 
-Das System heißt **Eval**. Es ist kein Skript, das du aufruft — es ist eine Architektur, die du verstehst und dann selbst betreibst.
+Das System heißt **Eval**. Es ist kein Skript, das du aufrufst — es ist eine Architektur, die du verstehst und dann selbst betreibst.
 
----
+So läuft diese Woche:
+1. **Intro-Video** — hast du auf der Lernplattform schon gesehen (falls nicht: erst das).
+2. **Dieser Kurs** — wir orientieren uns erst am fertigen System (Struktur, ein fertiger Beispiel-Lauf, wie man die Reports liest), dann lässt du das System selbst laufen.
+3. **Experimente** — danach machst du es zu deinem: eigener Business Case, eigene Anpassungen.
 
-Wir haben 9 Schritte vor uns. Der schwerste davon ist Schritt 2 — nicht weil er technisch ist, sondern weil er dich zwingt, klar zu denken.
+Der Kurs hat zwei Teile: **A — Orientierung** (3 Schritte, nur anschauen und verstehen) und **B — Selbst laufen lassen** (dein eigener Run). Am Ende: Experimente und Reflexion.
 
 Los geht's?
 
@@ -49,32 +52,34 @@ Los geht's?
 
 ---
 
-## Die 9 Schritte
+# TEIL A — Orientierung
 
----
+### SCHRITT 1 — Die Struktur: vier Ordner, ein Muster
 
-### SCHRITT 1 — Das System verstehen: Was ist Eval?
+**Lernziel:** Du verstehst, wie das System aufgebaut ist — dieselbe Ordner-Logik wie in Woche 1, nur für eine größere Aufgabe.
 
-**Lernziel:** Du verstehst den Grundgedanken hinter dem Eval-System — und warum es so gebaut ist, wie es gebaut ist.
-
-Sieh dir jetzt das Flussdiagramm an. Tippe:
+Schau dir zuerst die Ordnerstruktur an. Tippe:
 
 ```
-Zeig mir eval/FLOW.md
+Zeig mir die Ordnerstruktur dieses Projekts.
 ```
 
-Was du siehst, ist der gesamte Ablauf eines Runs. Lass mich die wichtigsten Punkte erklären:
+Was du siehst, ist dasselbe Muster wie in Woche 1:
 
-**Warum parallele Agenten?**
-Research passiert in 3 Streams gleichzeitig — Markt, Technologie, Probleme. Das spart nicht nur Zeit. Es verhindert, dass ein Agent durch seine Marktperspektive beeinflusst, was er über Technologie denkt. Jeder Agent liest nur, was er braucht. Fokus schlägt Vollständigkeit.
+| Ordner | Inhalt | Bedeutung |
+|--------|--------|-----------|
+| `context/` | company.md, strategy.md | **Statischer Kontext** — wer wir sind |
+| `input/` | input.yaml | **Dynamischer Kontext** — der Business Case dieses Laufs |
+| `scripts/` | 14 Prompt-Dateien | **Anweisungen an die KI** — was jeder Agent tun soll |
+| `output/` | (leer) | **Ergebnisse** — hier landet jeder Run |
 
-**Warum separate Hypothesen-Agenten?**
-Lösung, Technologie und Business Model werden von drei verschiedenen Agenten entwickelt — nicht von einem, der alles auf einmal macht. Das ist dasselbe Prinzip wie in Woche 1: kleinere Schritte mit kleinerem Kontext bringen tiefere Ergebnisse.
+Dazu zwei Orientierungsdateien im Wurzelverzeichnis: `FLOW.md` (das Flussdiagramm des ganzen Systems) und `run.md` (die Orchestrierung — wie ein Lauf abläuft). Und `results/` — dort liegen **fertige Beispiel-Läufe**, die wir uns gleich ansehen.
 
-**Warum eine Debatte?**
-Weil ein einzelner Agent, der einen Business Case bewertet, zu seinem eigenen Framing tendiert. Fünf verschiedene Personas mit unterschiedlichen Blickwinkeln — Optimist, Kritiker, Techniker, Marktexperte, Stratege — produzieren echte Widersprüche. Und aus echten Widersprüchen entstehen die wertvollsten Erkenntnisse.
+**Warum ist das System so gebaut?** Drei Design-Entscheidungen, die den Kern ausmachen:
 
-**Das Designprinzip dahinter:** Jeder Agent bekommt nur den Kontext, den er wirklich braucht. Das minimiert Halluzinationen und maximiert Tiefe. Es ist der Beweis, dass gute Agenten-Architektur qualitativ bessere Ergebnisse produziert als ein langer Prompt an ein einzelnes Modell.
+- **Parallele Research-Agenten (Markt, Technologie, Probleme):** Jeder sucht getrennt. Das verhindert, dass die Marktperspektive beeinflusst, was über Technologie gedacht wird. Fokus schlägt Vollständigkeit.
+- **Separate Hypothesen-Agenten (Lösung, Technologie, Business):** drei Winkel statt eines Alleskönners. Dasselbe Prinzip wie Woche 1: kleinere Schritte, kleinerer Kontext, tiefere Ergebnisse.
+- **Eine Debatte statt einer Bewertung:** Ein einzelner Agent bestätigt sein eigenes Framing. Fünf Personas mit unterschiedlichen Mandaten produzieren **echte Widersprüche** — und die sind das wertvollste Ergebnis.
 
 ```
 ─────────────────────────────────────
@@ -86,14 +91,74 @@ Weil ein einzelner Agent, der einen Business Case bewertet, zu seinem eigenen Fr
 
 ---
 
-### SCHRITT 2 — Den Input ausfüllen: Dein Business Case
+### SCHRITT 2 — Einen fertigen Lauf ansehen
+
+**Lernziel:** Du siehst, was das System produziert — bevor du selbst einen Run startest.
+
+In `results/` liegen drei fertige Beispiel-Läufe:
+
+| Case | Was er ist | Tiefe |
+|------|-----------|-------|
+| `results/neoemployee/` | KI-Agenten für HR-Vorverarbeitung | deep, 2 Debattenrunden |
+| `results/voltaris/` | Stromanbieter integriert Heimspeicher | deep, 2 Debattenrunden |
+| `results/hrperfect/` | HR-Plattform, auf der Teams eigene Agenten bauen | quick, 1 Debattenrunde |
+
+Öffne einen davon — am besten den Final Report:
+
+```
+Zeig mir results/voltaris/final_report.md
+```
+
+Das ist das Endprodukt eines kompletten Laufs: Executive Summary, eine Scorecard über fünf Dimensionen, eine klare Empfehlung (GO / CONDITIONAL GO / PIVOT / NO-GO) mit Bedingungen und offenen Fragen.
+
+Schau dir dann ruhig an, was **daneben** liegt: die drei `research_*.md`, `analysis_status_quo.md`, die drei `hypothesis_*.md`, `debate_round_1.md` (und `_2`). Genau diese Zwischenschritte hat das System nacheinander erzeugt — der Final Report verdichtet sie nur. Das ist die 100-%-Beobachtbarkeit: du kannst jeden Satz im Report bis zu seiner Quelle zurückverfolgen.
+
+**Hinweis:** `results/` ist nur zum Anschauen. Deine eigenen Läufe landen in `output/`.
+
+```
+─────────────────────────────────────
+▶ weiter        — Schritt 3
+⏭ überspringen  — Schritt 4
+⏹ stop          — Kurs unterbrechen
+─────────────────────────────────────
+```
+
+---
+
+### SCHRITT 3 — Wie man einen Report liest und nachvollzieht
+
+**Lernziel:** Du weißt, wie du so einen Report kritisch liest — als Gesprächspartner, nicht als Orakel.
+
+Nimm dir den Report aus Schritt 2 und lies ihn in dieser Reihenfolge:
+
+1. **Executive Summary + Empfehlung** — worauf läuft es hinaus?
+2. **Scorecard** — wo ist die Bewertung hoch, wo niedrig? Die niedrigste Dimension zeigt, wo der Fall am dünnsten ist.
+3. **Wo überrascht es dich?** Jede Überraschung ist ein Signal, dass das System etwas anders gewichtet als du — ein Gesprächseinstieg, kein Fehler.
+4. **Lies die Debatte** (`debate_round_1.md` / `_2.md`). Hier stehen die **echten Widersprüche** — genau das, worüber vor einer Entscheidung geredet werden muss.
+5. **Achte auf markierte Lücken.** Ein gutes System erfindet nichts, sondern schreibt „Research-Lücke" hin, wo Daten fehlen. Diese Stellen sind deine To-dos, keine Schwäche.
+
+**Übung im Nachvollziehen:** Nimm einen Satz aus dem Final Report und verfolge ihn rückwärts — Final Report → Debatte → Hypothese → Research. Wenn du die Quelle findest: solide. Wenn die Spur ins Leere läuft: da hat das System eine Lücke gefüllt. Genau dieses Prüfen ist die eigentliche Fähigkeit dieser Woche.
+
+```
+─────────────────────────────────────
+▶ weiter        — Schritt 4 (Teil B: dein eigener Run)
+⏭ überspringen  — Schritt 4
+⏹ stop          — Kurs unterbrechen
+─────────────────────────────────────
+```
+
+---
+
+# TEIL B — Selbst laufen lassen
+
+### SCHRITT 4 — Den Input ausfüllen: Dein Business Case
 
 **Lernziel:** Du weißt, wie du einen Business Case so strukturierst, dass das System damit arbeiten kann — und du hast dein eigenes `input.yaml` ausgefüllt.
 
 Öffne jetzt:
 
 ```
-eval/input.yaml
+input/input.yaml
 ```
 
 Du siehst ein Template mit vier Abschnitten: `company`, `strategy`, `business_case`, `run_options`.
@@ -106,11 +171,11 @@ Du siehst ein Template mit vier Abschnitten: `company`, `strategy`, `business_ca
 
 - `business_case` — Das Thema und eine erste Lösungsrichtung. Keine perfekte Hypothese — eine Vermutung, die untersucht werden soll. Der Abschnitt `solution_direction` ist keine Antwort, sondern eine Frage in Hypothesen-Form.
 
-- `run_options` — Für den ersten Run: `mode: "step"` lassen. Das System pausiert nach jeder Phase. Du siehst was produziert wurde, bevor es weitergeht.
+- `run_options` — Für den ersten Run: `mode: "step"` lassen (pausiert nach jeder Phase). `research_depth: "quick"` ist schneller und günstiger — für den ersten Durchlauf völlig ausreichend; `deep` hebst du dir für einen ernsthaften Case auf.
 
 **Deine Aufgabe jetzt:**
 
-Öffne `eval/input.yaml` in einem Texteditor und fülle es aus. Du kannst das mitgelieferte NeoEmployee-Beispiel als Vorlage nehmen. Wenn du noch keinen eigenen Business Case hast, nutze den Beispiel-Input direkt — du siehst dann trotzdem, wie das System funktioniert.
+Öffne `input/input.yaml` und fülle es aus. Du kannst das mitgelieferte NeoEmployee-Beispiel als Vorlage nehmen. Wenn du noch keinen eigenen Business Case hast, nutze den Beispiel-Input direkt — du siehst dann trotzdem, wie das System funktioniert.
 
 Wenn du fertig bist, komm zurück und tippe "weiter".
 
@@ -118,25 +183,25 @@ Wenn du fertig bist, komm zurück und tippe "weiter".
 
 ```
 ─────────────────────────────────────
-▶ weiter        — Schritt 3 (wenn input.yaml fertig ist)
-⏭ überspringen  — Schritt 3 mit Beispiel-Input
+▶ weiter        — Schritt 5 (wenn input.yaml fertig ist)
+⏭ überspringen  — Schritt 5 mit Beispiel-Input
 ⏹ stop          — Kurs unterbrechen
 ─────────────────────────────────────
 ```
 
 ---
 
-### SCHRITT 3 — Phase 1: Research starten
+### SCHRITT 5 — Phase 1: Research starten
 
 **Lernziel:** Du startest die drei parallelen Research-Agenten und verstehst, was sie tun — und warum sie es getrennt tun.
 
 Tippe jetzt:
 
 ```
-Starte einen Eval-Run mit eval/input.yaml — Phase 1.
+Starte einen Eval-Run mit input/input.yaml — Phase 1.
 ```
 
-Claude liest deinen Input, legt einen Run-Ordner an und startet drei Agenten gleichzeitig im Hintergrund:
+Claude liest deinen Input, legt einen Run-Ordner an und startet drei Agenten parallel:
 
 | Agent | Was er sucht | Output |
 |---|---|---|
@@ -144,25 +209,25 @@ Claude liest deinen Input, legt einen Run-Ordner an und startet drei Agenten gle
 | Technology Research | Tech-Landschaft, Reifegrad, API-Realitäten, Make/Buy | `research_technology.md` |
 | Problem Research | Öffentlich geäußerte Pain Points, Häufigkeit, Schwere | `research_problems.md` |
 
-Jeder Agent führt 6–26 WebSearch- und WebFetch-Aufrufe durch. Das dauert einige Minuten.
+Jeder Agent führt mehrere WebSearch- und WebFetch-Aufrufe durch (bei `quick` mindestens 3, bei `deep` deutlich mehr). Das dauert einige Minuten.
 
 **Was du in der Zwischenzeit tun kannst:**
 
-Lies `eval/prompts/p1_research_market.md`. Das ist der exakte Prompt, den der Market-Research-Agent bekommt. Du siehst: Er hat einen klaren Auftrag, eine definierte Struktur für den Output und eine Mindestanforderung an Quellen. Das ist der Unterschied zwischen einem guten Agenten und einem, der einfach etwas zusammenfasst.
+Lies `scripts/p1_research_market.md`. Das ist der exakte Prompt, den der Market-Research-Agent bekommt. Du siehst: Er hat einen klaren Auftrag, eine definierte Struktur für den Output und eine Mindestanforderung an Quellen. Das ist der Unterschied zwischen einem guten Agenten und einem, der einfach etwas zusammenfasst.
 
-Wenn alle drei Agenten fertig sind, meldet Claude sich. Lies dann mindestens eine der drei Dateien vollständig.
+Wenn alle drei Agenten fertig sind, meldet sich Claude. Lies dann mindestens eine der drei Dateien vollständig.
 
 ```
 ─────────────────────────────────────
 ▶ weiter        — wenn Phase 1 abgeschlossen ist
-⏭ überspringen  — Schritt 4 (ohne Phase 1 zu laufen)
+⏭ überspringen  — Schritt 6 (ohne Phase 1 zu laufen)
 ⏹ stop          — Kurs unterbrechen
 ─────────────────────────────────────
 ```
 
 ---
 
-### SCHRITT 4 — Phase 2: Ist-Analyse
+### SCHRITT 6 — Phase 2: Ist-Analyse
 
 **Lernziel:** Du verstehst, warum die Ist-Analyse sequenziell läuft — und was sie anders macht als Research.
 
@@ -187,14 +252,14 @@ Lies `analysis_status_quo.md` wenn er fertig ist. Achte besonders auf die Lücke
 ```
 ─────────────────────────────────────
 ▶ weiter        — wenn Phase 2 abgeschlossen ist
-⏭ überspringen  — Schritt 5
+⏭ überspringen  — Schritt 7
 ⏹ stop          — Kurs unterbrechen
 ─────────────────────────────────────
 ```
 
 ---
 
-### SCHRITT 5 — Phase 3: Lösungshypothesen
+### SCHRITT 7 — Phase 3: Lösungshypothesen
 
 **Lernziel:** Du erlebst, wie drei verschiedene Agenten denselben Research-Pool aus drei verschiedenen Winkeln lesen — und drei kohärente Hypothesen produzieren.
 
@@ -221,14 +286,14 @@ Lies alle drei wenn sie fertig sind. Notiere dir, was dich überrascht — posit
 ```
 ─────────────────────────────────────
 ▶ weiter        — wenn Phase 3 abgeschlossen ist
-⏭ überspringen  — Schritt 6
+⏭ überspringen  — Schritt 8
 ⏹ stop          — Kurs unterbrechen
 ─────────────────────────────────────
 ```
 
 ---
 
-### SCHRITT 6 — Phase 4: Die Agenten-Debatte
+### SCHRITT 8 — Phase 4: Die Agenten-Debatte
 
 **Lernziel:** Du verstehst, warum Debatte als Architektur-Entscheidung wichtiger ist als ein einzelner "Bewertungs-Prompt" — und du erlebst, wie echte Widersprüche entstehen.
 
@@ -238,7 +303,7 @@ Tippe:
 Weiter mit Phase 4.
 ```
 
-Fünf Agenten starten gleichzeitig — jeder schreibt seine Position in dieselbe Datei (`debate_round_1.md`), ohne die anderen lesen zu können:
+Fünf Agenten bewerten die Hypothesen gleichzeitig — jeder aus seiner eigenen Rolle, keiner kann die anderen lesen:
 
 | Persona | Blickwinkel |
 |---|---|
@@ -248,7 +313,7 @@ Fünf Agenten starten gleichzeitig — jeder schreibt seine Position in dieselbe
 | Marktexperte | ICP-Realität, Sizing, GTM-Viabilität, Preisbereitschaft |
 | Stratege | Moats, Sequenzierung, Opportunitätskosten, Langzeitposition |
 
-Danach liest der **Moderator** alle fünf Positionen und synthetisiert: Konsens-Punkte, echte Widersprüche, offene Fragen.
+Danach liest der **Moderator** alle fünf Positionen und synthetisiert: Konsens-Punkte, echte Widersprüche, offene Fragen. Das Ergebnis landet in `debate_round_1.md`.
 
 **Warum so?**
 
@@ -256,19 +321,19 @@ Ein einzelner Bewertungs-Agent tendiert dazu, die Hypothese zu bestätigen, die 
 
 Echte Widersprüche sind das wertvollste Output des gesamten Systems. Nicht weil einer Recht hat — sondern weil sie die Fragen sichtbar machen, die vor einer Entscheidung beantwortet werden müssen.
 
-**Runde 2:** Der Moderator empfiehlt eine zweite Runde, wenn die Widersprüche groß genug sind. In Runde 2 werden die Agenten auf die zwei oder drei ungelösten Kernfragen fokussiert — engere Fragen, tiefere Antworten.
+**Runde 2:** Wenn `run_options.debate_rounds: 2` gesetzt ist und der Moderator die Widersprüche für groß genug hält, empfiehlt er eine zweite Runde — fokussiert auf die zwei oder drei ungelösten Kernfragen (`debate_round_2.md`). Bei `debate_rounds: 1` ist nach Runde 1 Schluss.
 
 ```
 ─────────────────────────────────────
 ▶ weiter        — wenn Phase 4 abgeschlossen ist
-⏭ überspringen  — Schritt 7
+⏭ überspringen  — Schritt 9
 ⏹ stop          — Kurs unterbrechen
 ─────────────────────────────────────
 ```
 
 ---
 
-### SCHRITT 7 — Phase 5: Final Report
+### SCHRITT 9 — Phase 5: Final Report
 
 **Lernziel:** Du verstehst, was einen guten Final Report ausmacht — und liest den deines Runs kritisch.
 
@@ -278,7 +343,7 @@ Tippe:
 Weiter mit Phase 5.
 ```
 
-Der Synthese-Agent liest alle neun Dokumente des Runs und schreibt den Final Report. Er nimmt keine neue Perspektive ein — er integriert alles, was die vorherigen Agenten erarbeitet haben, und formuliert eine klare Empfehlung:
+Der Synthese-Agent liest alle Dokumente des Runs und schreibt den Final Report. Er nimmt keine neue Perspektive ein — er integriert alles, was die vorherigen Agenten erarbeitet haben, und formuliert eine klare Empfehlung:
 
 **GO / CONDITIONAL GO / PIVOT / NO-GO**
 
@@ -289,27 +354,23 @@ Der Report enthält:
 - Empfehlung mit konkreten Bedingungen und Next Steps
 - Offene Fragen mit Priorisierung und Lösungsweg
 
-**Wie du den Report liest:**
-
-Lies zuerst die Executive Summary und die Empfehlung. Dann die Scorecard. Dann prüfe: Bist du überrascht? Wenn ja — wo? Eine Überraschung ist ein Signal, dass das System etwas anders gewichtet hat als du. Das ist kein Fehler. Es ist ein Gesprächseinstieg.
-
-Der Report ist kein Orakel. Er ist ein gut vorbereiteter Gesprächspartner, den du befragen, herausfordern und widerlegen kannst. Das ist sein eigentlicher Wert.
+Lies ihn genau so, wie du es in Schritt 3 geübt hast: erst Summary + Empfehlung, dann Scorecard, dann prüfen, wo du überrascht bist. Der Report ist kein Orakel. Er ist ein gut vorbereiteter Gesprächspartner, den du befragen, herausfordern und widerlegen kannst.
 
 ```
 ─────────────────────────────────────
-▶ weiter        — Schritt 8
-⏭ überspringen  — Schritt 9
+▶ weiter        — Schritt 10
+⏭ überspringen  — Schritt 11
 ⏹ stop          — Kurs unterbrechen
 ─────────────────────────────────────
 ```
 
 ---
 
-### SCHRITT 8 — Den Report herausfordern
+### SCHRITT 10 — Den Report herausfordern
 
 **Lernziel:** Den Report nicht als Antwort behandeln, sondern als Ausgangspunkt — und gezielt Lücken finden.
 
-Das System ist sehr gut darin, Breite und Rigorosität zu liefern. Es hat eine Lücke: Es kennt euch von innen nicht. Es sieht keine Personen, keine Energien, keine echten organisatorischen Widerstände. Es weiß nicht, wer genau bei euch das bauen würde — und was das für euren aktuellen Kunden-Pipeline bedeutet.
+Das System ist sehr gut darin, Breite und Rigorosität zu liefern. Es hat eine Lücke: Es kennt euch von innen nicht. Es sieht keine Personen, keine Energien, keine echten organisatorischen Widerstände. Es weiß nicht, wer genau bei euch das bauen würde — und was das für eure aktuelle Kunden-Pipeline bedeutet.
 
 **Drei Arten, den Report herauszufordern:**
 
@@ -317,7 +378,7 @@ Das System ist sehr gut darin, Breite und Rigorosität zu liefern. Es hat eine L
 ```
 Was fehlt dem Report, das nur wir intern wissen können?
 ```
-Claude hilft dir, die spezifischen internen Datenpunkte zu identifizieren, die der Report als "Flag für primäre Forschung" markiert hat — und die ihr sofort aus euren eigenen Daten beantworten könntet.
+Claude hilft dir, die spezifischen internen Datenpunkte zu identifizieren, die der Report als "Research-Lücke" oder "für Primärrecherche vormerken" markiert hat — und die ihr sofort aus euren eigenen Daten beantworten könntet.
 
 **2. Eine Annahme direkt angreifen:**
 ```
@@ -335,7 +396,7 @@ Mach jetzt einen dieser drei Schritte mit deinem eigenen Report.
 
 ```
 ─────────────────────────────────────
-▶ weiter        — Schritt 9
+▶ weiter        — Schritt 11
 ⏭ überspringen  — Abschluss
 ⏹ stop          — Kurs unterbrechen
 ─────────────────────────────────────
@@ -343,28 +404,33 @@ Mach jetzt einen dieser drei Schritte mit deinem eigenen Report.
 
 ---
 
-### SCHRITT 9 — Reflexion: Was haben wir gebaut?
+# TEIL C — Experimente & Reflexion
 
-**Halte kurz inne.**
+### SCHRITT 11 — Mach es zu deinem
 
-Wir haben in dieser Woche eine Analyse-Architektur durchgearbeitet, die einem Prinzip folgt:
+**Lernziel:** Du machst das System zu deinem Werkzeug — durch Experimentieren, nicht durch Zuschauen.
+
+Ein paar Experimente, die sich lohnen:
+
+- **Eigener Case:** Schreib `input/input.yaml` auf deinen echten oder erfundenen Business Case um und lass einen ganzen Run laufen. (Für einen sauberen Lauf: `output/` vorher leeren.)
+- **Ein Skript anpassen:** Dir gefällt nicht, wie ein Agent arbeitet? Öffne sein Prompt in `scripts/` (z. B. `scripts/p4_debate_critic.md`), schärfe den Auftrag, lass die Phase neu laufen. Vergleiche.
+- **Tiefe variieren:** Lass denselben Case einmal `quick` und einmal `deep` laufen. Wo lohnt sich die Tiefe, wo nicht?
+- **Weiterentwickeln:** In `EXTENSIONS.md` stehen Ideen, wie man das System ausbauen könnte. Was würdest du ändern?
+
+Das System ist eine Sandbox — du kannst nichts kaputt machen. Je mehr du damit spielst, desto besser verstehst du, wo es stark ist und wo du nachhelfen musst.
+
+**Reflexion — was du gebaut und benutzt hast:**
 
 > **Zerlege die Aufgabe. Gib jedem Agenten nur den Kontext, den er braucht. Produziere echte Widersprüche, nicht konsensuale Zusammenfassungen.**
-
-Was die Phasen gemeinsam haben:
 
 | Phase | Parallele Agenten | Was sie verhindert |
 |---|---|---|
 | Research | 3 | Confirmation Bias durch gemeinsamen Kontext |
 | Hypothesen | 3 | Überkomplexe All-in-one-Agenten |
 | Debatte | 5 | Premature Closure |
-| Final Report | 1 | Aber liest alle 9 vorherigen Dokumente |
+| Final Report | 1 | Aber liest alle vorherigen Dokumente |
 
 Das System produziert keine Wahrheit. Es produziert eine gut strukturierte, gut begründete Ausgangslage für eine Entscheidung — auf einem Level, das sonst Wochen in Anspruch nimmt.
-
-**Das Wichtigste, was du heute gelernt hast:**
-
-Ein KI-System, das echte Widersprüche produziert, ist wertvoller als eines, das konsensuale Empfehlungen liefert. Widersprüche zeigen, wo die Entscheidung wirklich liegt — nicht dort, wo alle einig sind, sondern dort, wo die vernünftigsten Leute im Raum sich nicht einig sein können.
 
 ```
 ─────────────────────────────────────
@@ -394,7 +460,8 @@ Wenn du alle Schritte gemacht hast:
 
 Du hast heute gelernt:
 - Wie ein mehrstufiges Agenten-System aufgebaut ist — und warum jede Designentscheidung einen Grund hat
-- Wie parallele Agenten mit geteilten Output-Dateien zusammenarbeiten
+- Wie man einen fertigen Analyse-Report liest und bis zur Quelle zurückverfolgt
+- Wie parallele Agenten mit fokussiertem Kontext zusammenarbeiten
 - Warum strukturierte Debatten besser sind als einzelne Bewertungs-Prompts
 - Wie man einen KI-Report nicht als Antwort behandelt, sondern als Gesprächspartner
 

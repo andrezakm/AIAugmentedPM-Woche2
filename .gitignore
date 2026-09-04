@@ -1,6 +1,11 @@
-# HR Harness run — confidential, not committed
-output/run_20260321_hr_harness/
-input_hr_harness.yaml
+# Eigene Läufe bleiben lokal — nur output/.gitkeep wird getrackt
+output/*
+!output/.gitkeep
 
-# NeoEmployee run (run_20260321_170453) is intentionally included
-# as a reference example for course participants
+# Keine YAML-Dateien im Wurzelverzeichnis (lokale Cases) — Eingaben liegen in input/
+/*.yaml
+
+# OS-/Scratch-Dateien
+.DS_Store
+.claude/worktrees/
+.claude/settings.local.json

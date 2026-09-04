@@ -12,7 +12,7 @@ The user says something like:
 > "Start the eval system"
 
 Claude Code then:
-1. Reads `eval/input.yaml`
+1. Reads `input/input.yaml`
 2. Reads this `run.md` file
 3. Creates the output directory for this run
 4. Follows the phase sequence below
@@ -22,7 +22,7 @@ Claude Code then:
 ## Pre-Run Setup
 
 ### Step 1: Read and validate input
-Read `eval/input.yaml`. Check:
+Read `input/input.yaml`. Check:
 - All required fields are filled (company.name, company.description, business_case.topic, business_case.solution_direction)
 - `run_options.mode` is set ("step" or "auto")
 - `run_options.research_depth` is set ("quick" or "deep")
@@ -30,7 +30,7 @@ Read `eval/input.yaml`. Check:
 If any required field is empty: stop and ask the user to complete it.
 
 ### Step 2: Create run directory
-Create: `eval/output/run_{{YYYYMMDD_HHMMSS}}/`
+Create: `output/run_{{YYYYMMDD_HHMMSS}}/`
 This is the `{{run_id}}` used in all prompts.
 
 ### Step 3: Prepare context variables
@@ -72,9 +72,9 @@ Run all phases sequentially without pausing. Output a one-line status after each
 
 | Agent | Prompt file | Output file |
 |---|---|---|
-| research-market | `eval/prompts/p1_research_market.md` | `output/{{run_id}}/research_market.md` |
-| research-technology | `eval/prompts/p1_research_technology.md` | `output/{{run_id}}/research_technology.md` |
-| research-problems | `eval/prompts/p1_research_problems.md` | `output/{{run_id}}/research_problems.md` |
+| research-market | `scripts/p1_research_market.md` | `output/{{run_id}}/research_market.md` |
+| research-technology | `scripts/p1_research_technology.md` | `output/{{run_id}}/research_technology.md` |
+| research-problems | `scripts/p1_research_problems.md` | `output/{{run_id}}/research_problems.md` |
 
 Before launching: replace all `{{variable}}` placeholders in each prompt with the actual values from input.yaml.
 
@@ -92,7 +92,7 @@ Each agent:
 ## PHASE 2 — Status Quo Analysis (sequential)
 
 **Launch 1 agent:**
-- Prompt: `eval/prompts/p2_analysis.md`
+- Prompt: `scripts/p2_analysis.md`
 - Input: reads the 3 research files from Phase 1
 - Output: `output/{{run_id}}/analysis_status_quo.md`
 
@@ -108,9 +108,9 @@ Each agent:
 
 | Agent | Prompt file | Output file |
 |---|---|---|
-| hypothesis-solution | `eval/prompts/p3_hypothesis_solution.md` | `output/{{run_id}}/hypothesis_solution.md` |
-| hypothesis-technology | `eval/prompts/p3_hypothesis_technology.md` | `output/{{run_id}}/hypothesis_technology.md` |
-| hypothesis-business | `eval/prompts/p3_hypothesis_business.md` | `output/{{run_id}}/hypothesis_business_model.md` |
+| hypothesis-solution | `scripts/p3_hypothesis_solution.md` | `output/{{run_id}}/hypothesis_solution.md` |
+| hypothesis-technology | `scripts/p3_hypothesis_technology.md` | `output/{{run_id}}/hypothesis_technology.md` |
+| hypothesis-business | `scripts/p3_hypothesis_business.md` | `output/{{run_id}}/hypothesis_business_model.md` |
 
 Each agent reads Phase 1 outputs + `analysis_status_quo.md`.
 
@@ -128,11 +128,11 @@ Each agent reads Phase 1 outputs + `analysis_status_quo.md`.
 
 | Agent | Prompt file | Appends to |
 |---|---|---|
-| debate-optimist | `eval/prompts/p4_debate_optimist.md` | `output/{{run_id}}/debate_round_1.md` |
-| debate-critic | `eval/prompts/p4_debate_critic.md` | `output/{{run_id}}/debate_round_1.md` |
-| debate-technician | `eval/prompts/p4_debate_technician.md` | `output/{{run_id}}/debate_round_1.md` |
-| debate-market | `eval/prompts/p4_debate_market.md` | `output/{{run_id}}/debate_round_1.md` |
-| debate-strategist | `eval/prompts/p4_debate_strategist.md` | `output/{{run_id}}/debate_round_1.md` |
+| debate-optimist | `scripts/p4_debate_optimist.md` | `output/{{run_id}}/debate_round_1.md` |
+| debate-critic | `scripts/p4_debate_critic.md` | `output/{{run_id}}/debate_round_1.md` |
+| debate-technician | `scripts/p4_debate_technician.md` | `output/{{run_id}}/debate_round_1.md` |
+| debate-market | `scripts/p4_debate_market.md` | `output/{{run_id}}/debate_round_1.md` |
+| debate-strategist | `scripts/p4_debate_strategist.md` | `output/{{run_id}}/debate_round_1.md` |
 
 > Note: All 5 agents append to the same file. Each writes a clearly marked section (## OPTIMIST, ## CRITIC, etc.).
 > Initialize the file with a header before launching agents:
@@ -141,7 +141,7 @@ Each agent reads Phase 1 outputs + `analysis_status_quo.md`.
 **After all 5 persona agents complete:**
 
 **Launch Moderator agent (sequential):**
-- Prompt: `eval/prompts/p4_moderator.md` with `{{round_number}} = 1`
+- Prompt: `scripts/p4_moderator.md` with `{{round_number}} = 1`
 - Reads: `debate_round_1.md` + hypothesis files + analysis
 - Appends moderator synthesis to `debate_round_1.md`
 
@@ -163,7 +163,7 @@ The Round 2 persona prompts should instruct agents to focus on the specific tens
 ## PHASE 5 — Synthesis & Final Report (sequential)
 
 **Launch 1 agent:**
-- Prompt: `eval/prompts/p5_synthesis.md`
+- Prompt: `scripts/p5_synthesis.md`
 - Reads: all output files from all previous phases
 - Output: `output/{{run_id}}/final_report.md`
 
@@ -176,7 +176,7 @@ The Round 2 persona prompts should instruct agents to focus on the specific tens
 ## PHASE 6 — Flow Documentation
 
 After all phases complete:
-- Update `eval/FLOW.md` with the actual Mermaid diagram reflecting this run
+- Update `FLOW.md` with the actual Mermaid diagram reflecting this run
 - Output a brief run summary to the user:
   - Files created
   - Overall recommendation (from final_report.md)
@@ -201,7 +201,7 @@ If research returns no useful results:
 ## File Checklist (successful run)
 
 ```
-eval/output/{{run_id}}/
+output/{{run_id}}/
   ✓ research_market.md
   ✓ research_technology.md
   ✓ research_problems.md

@@ -1,0 +1,139 @@
+# EVAL — Business Case Input: HR Harness
+# Last updated: 2026-03-21
+# Fiktiver Beispiel-Case: HRPerfect (IP Markus Andrezak)
+
+company:
+  name: "HRPerfect"
+  description: |
+    Established HR/SaaS company, 70 employees, ~€14M annual revenue, private investor AG structure.
+    Core product (Horizon 1): Job Shop — automated job posting management and distribution,
+    positioned above the ATS. Highest adoption, clearest product-market fit.
+    Current Horizon 2 in rollout: ROI analytics product showing which HR measures generate
+    what return. Technically functional but not yet generating customer pull — too strategic,
+    not addressing acute productivity pain.
+    Sales funnel currently at ~50% of normal volume. Cost-covering but unsustainable long-term.
+    This is the urgency driver behind the search for a new strategic direction.
+    Tech stack: primarily Java. Existing products are built and operational.
+    Inspiration reference: ein kleines Wiener Voice-AI-Startup (8 Mitarbeiter, 2 Entwickler) — built a
+    self-serve platform for voice AI user support agents. Proves the technical model works
+    at small team scale. We saw that specific agent delivery platform vibe code copied in a week. 
+  tech_stack:
+    - "Java (legacy platform — existing products: Job Shop, ROI analytics, Compliance Layer APIs)"
+    - "n8n (agent orchestration layer for HR Harness — new)"
+    - "Claude API / Claude Code (LLM layer, Python, MCP — new)"
+    - "MCP servers (integration/adapter ecosystem — new)"
+    - "HR Compliance Layer (existing as HRPerfect infrastructure — must be made available via API)"
+  existing_assets:
+    - "600 trusted customer relationships — from SME to enterprise — in DACH. This is the
+      primary GTM asset. These customers already use HRPerfect products, trust the vendor, and
+      are a natural first audience for platform expansion."
+    - "Compliance Layer: significant parts already exist as HRPerfect's own infrastructure and
+      knowledge. The task is to expose and productize it via API — not build from scratch."
+    - "Market signal from own customer base: companies ARE buying agents today, including
+      via expensive platforms. The friction is boutique vendor credibility — small agencies
+      are hard to get past procurement and trust gates. HRPerfect is already past that gate with
+      600 customers."
+
+strategy:
+  direction: |
+    Horizon 1 (now): Job Shop generates revenue and provides market access.
+    Explicit permission to cannibalize if new model is successful enough — this is not
+    a protected asset. The company is actively searching for models that may replace it.
+    Horizon 2 (goal): HR Harness — a platform that lets HR departments build their own
+    AI agents, the way developers build with Claude Code.
+    The core inversion: instead of the product team specifying which HR use cases to solve
+    ("Joy" approach — over-promised, under-delivered), give HR teams the harness to build
+    their own painkillers. The product is not the agents — the product is the capability to
+    build them, compliantly, without coding.
+    The platform differentiator: an HR Competency Layer baked into the harness —
+    German regulatory knowledge (GDPR, EU AI Act, BetrVG, BDSG), HR domain logic,
+    compliance pre-built. This is what makes it DACH-native and not a generic agent builder.
+    The "show don't tell" GTM hypothesis: 15 minutes of live demo converts — similar to
+    how showing Claude Code to a developer for 15 minutes results in organizational change.
+    Consulting as paid acquisition (not as a business model): structured demo engagements
+    that pay for themselves and convert to platform subscriptions.
+  constraints:
+    - "DACH-first — Germany primary, Austria/Switzerland secondary (not global go-to-market)"
+    - "Enterprise sales cycle exists and must be supplemented, not replaced — looking for
+      faster-converting smaller entry points that accelerate enterprise deals downstream"
+    - "No guarantees on system integrations or adapters — the market (MCP servers, API
+      providers, third-party plugins) provides these over time; the company does not
+      commit to specific integrations"
+    - "Job Shop cannibalization is acceptable — do not protect Horizon 1 at expense of
+      a clearly superior Horizon 2 direction"
+    - "Platform pricing must scale with company size — small companies must have
+      viable small entry points; the model cannot be enterprise-only"
+
+business_case:
+  topic: |
+    The company's existing HR/SaaS model is under pressure: sales funnel at 50% of
+    normal, existing products not generating pull in the current market. The strategic
+    question: can the company invert its product philosophy — from building specific
+    HR agent use cases internally to building a platform (HR Harness) that lets HR
+    departments build their own agents — and make this a viable, scalable business
+    before the current model deteriorates?
+    The market context: HR software buyers have stopped large-ticket SaaS purchases.
+    They are buying small, specific painkillers from agencies — with inconsistent
+    quality, high ramp costs, and no compliance baseline. This is the gap the HR
+    Harness would fill: self-serve agent creation with compliance pre-built, for any
+    HR use case the customer can imagine.
+
+  solution_direction: |
+    HR Harness: a self-serve platform for HR teams to build, deploy, and manage their own
+    AI agents — without coding, with German compliance pre-baked into every component.
+
+    The platform has three layers:
+    1. HR Competency Layer — pre-built understanding of German HR law (GDPR Art. 22,
+       EU AI Act Annex III high-risk classification, BetrVG co-determination, BDSG Section 26),
+       HR domain vocabulary, German document formats (Lebenslauf, Zeugnisse, Betriebsvereinbarung).
+       This layer is the moat. It cannot be replicated by a generic agent builder.
+
+    2. Agent Builder — visual/low-code interface to configure agents for specific HR workflows.
+       The Claude Code parallel: same excitement, same "I can build this myself" feeling,
+       but for HR managers rather than developers. Data problem handled like Claude Code:
+       companies know their own workarounds (CSV exports, email workflows, etc.) and
+       the harness meets them where they are.
+
+    3. Marketplace / Ecosystem — Skills and Plugins delivered over time (like Claude Code's
+       MCP server ecosystem). The company does not guarantee specific integrations; the market
+       provides them. Company curates, validates, and distributes them on the platform.
+
+    Business model hypothesis (to be investigated):
+    - Platform access fee (base — access to the HR Competency Layer and builder)
+    - Usage fee (number of active agents + volume of processed cases — NOT token-based)
+    - Scaling: small company → small plan → small agent + limited cases
+                large company → large plan → unlimited agents + high volume
+    - Consulting as paid acquisition: structured demo engagements that convert to subscriptions
+      (not consulting as a P&L line, but as a customer acquisition funnel accelerator)
+
+    Key open questions for this analysis:
+    1. Which business model structures actually work for a platform of this type?
+       (Platform fee + usage is the hypothesis — what does the evidence say?)
+    2. What is the right pricing architecture? How do you price for both a 50-person
+       HR team and a 5,000-person enterprise on the same platform?
+    3. What is the most defensible moat in this space — is it the HR Competency Layer,
+       the data accumulated from agent usage, the ecosystem/marketplace, or something else?
+    4. What does the go-to-market look like for a product that requires a live demo to convert?
+       Can this be done at scale, or is it inherently high-touch?
+    5. What is the competitive landscape — who else is building this, and from which direction
+       are they approaching (generic agent builders moving into HR, HR software vendors adding
+       agent builders, pure HR AI startups)?
+
+  target_market: |
+    Primary: DACH HR departments of all company sizes — from SME (50–500 employees) to
+    large enterprise (500–5,000+). Unlike the NeoEmployee case, the goal here is broad
+    horizontal reach across company sizes, not a narrow ICP.
+    The critical design constraint: the pricing model must allow a 50-person company to
+    enter with a small plan and grow, while also serving a 2,000-person enterprise on the
+    same platform. This is the Claude Code model applied to B2B HR software.
+    Secondary: HR software vendors and implementation partners who could white-label or
+    integrate the HR Competency Layer into their own offerings.
+    Entry wedge: existing Job Shop customer base as first platform adopters — these
+    customers already trust the vendor, understand the HR context, and are a natural
+    audience for a platform expansion pitch.
+
+run_options:
+  debate_rounds: 1        # 1 round — this run used a single debate round
+  research_depth: "quick"  # "quick" (3 searches/agent) | "deep" (6+ searches/agent)
+  language: "de"          # Research and output in German
+  mode: "auto"            # "step" (pause after each phase) | "auto" (fully automatic)

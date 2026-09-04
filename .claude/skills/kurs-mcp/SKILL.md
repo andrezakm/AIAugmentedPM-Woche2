@@ -1,4 +1,6 @@
 ---
+name: kurs-mcp
+description: Startet den MCP-Kurs „Externe Dienste in Skills einbinden" (Zusatz zu Woche 2) und führt Schritt für Schritt durch Konnektoren, Skill-Bau mit Slack, Gmail und Google Calendar sowie die direkte MCP-Konfiguration.
 disable-model-invocation: true
 ---
 

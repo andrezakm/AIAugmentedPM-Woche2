@@ -91,7 +91,7 @@ flowchart TD
 ## Output Files per Run
 
 ```
-eval/output/run_YYYYMMDD_HHMMSS/
+output/run_YYYYMMDD_HHMMSS/
 ├── research_market.md            Phase 1
 ├── research_technology.md        Phase 1
 ├── research_problems.md          Phase 1
@@ -106,7 +106,7 @@ eval/output/run_YYYYMMDD_HHMMSS/
 
 ---
 
-## Architecture Notes (from run_20260321_170453)
+## Architecture Notes (from the NeoEmployee run — see `results/neoemployee/`)
 
 **Shared-file append pattern:** All 5 debate personas write to a single file by appending. This works reliably but requires the file to be pre-created with a header before agents are launched. The moderator runs sequentially *after* all personas complete (waiting for all task notifications).
 

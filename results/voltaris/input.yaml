@@ -1,0 +1,90 @@
+# EVAL — Business Case Input: Voltaris (Speicher-Integration)
+# Fiktiver Beispiel-Case für den Kurs. Erstellt: 2026-09-01
+# Domäne: dynamische Stromtarife + Heimspeicher (Hardware + Software)
+
+company:
+  name: "Voltaris"
+  description: |
+    Voltaris ist ein fünf Jahre alter deutscher Energie-Startup mit dynamischen Stromtarifen:
+    Kunden zahlen den stündlich schwankenden Börsen-/Spotpreis (Day-Ahead) statt eines Fixtarifs,
+    plus eine schlanke monatliche Gebühr. Kern ist eine Smartphone-App, die Live-Preise anzeigt
+    und Kunden anregt, Verbrauch in günstige Stunden zu verschieben.
+    Stand heute: solide Traktion, treue Investoren, gerade neue Finanzierungsrunde abgeschlossen.
+    Kundenbasis sind "interessierte" Stromkunden, die sich bewusst für einen dynamischen Tarif
+    entschieden haben. Team ~55 Personen, Schwerpunkt Software, UX und Energiemarkt/Beschaffung.
+    Umsatz heute: Marge aus dem Energievertrieb plus App-/Servicegebühr. Keine eigene Hardware-
+    oder Installationskompetenz — die müsste erst aufgebaut oder eingekauft werden.
+    Zentrale operative Erkenntnis (und Überraschung): Selbst "interessierte" Kunden sind
+    erstaunlich wenig engagiert. Auch wer dynamische Tarife versteht, verschiebt seinen Verbrauch
+    kaum aktiv. Das Nutzenversprechen ("verlagere Last in günstige Stunden") bleibt dadurch
+    weitgehend ungenutzt — das ist das eigentliche Problem im Kern des Geschäfts.
+  tech_stack:
+    - "Smartphone-App (iOS/Android) — Live-Preise, Verbrauchs-Insights, Nudges"
+    - "Cloud-Backend (Python) — Day-Ahead-Marktanbindung, Abrechnung"
+    - "Smart-Meter-Gateway-Anbindung (SMGW), soweit der Rollout es zulässt"
+    - "Daten/Analytics für Verbrauchsmuster und Ersparnis-Anzeige"
+    - "Keine Hardware-Logistik, keine Installations-/Serviceorganisation (heute)"
+
+strategy:
+  direction: |
+    Horizon 1 (heute): dynamischer Stromtarif mit starker App — reines Software-/Vertriebsgeschäft.
+    Horizon 2 (Ziel): "Heim-Energie-Plattform" — Hardware (Batteriespeicher) plus Software-Orchestrierung.
+    Die Wette: Ein Speicher holt den Nutzen des dynamischen Tarifs AUTOMATISCH (lädt bei niedrigen
+    Preisen, entlädt bei hohen; optimiert PV-Eigenverbrauch), statt vom Kunden Verhaltensänderung zu
+    verlangen. "Einrichten und vergessen" schlägt "bitte verschieb deine Wäsche auf 14 Uhr". Damit
+    würde die Kern-Schwäche (mangelndes Engagement) durch Technik gelöst — plus wiederkehrender
+    Umsatz aus Energie und Speicher/Service, evtl. plus Netz-/VPP-Erlöse (virtuelles Kraftwerk,
+    §14a EnWG steuerbare Lasten).
+  constraints:
+    - "DACH-first, Fokus Deutschland — keine internationale Expansion in diesem Schritt"
+    - "Startup-Bilanz: begrenztes Kapital — Speicher auf die eigene Bilanz zu kaufen ist riskant;
+       Leasing/Finanzierung/Partner müssen geprüft werden"
+    - "Kein reines Installateursgeschäft mit eigenen Montage-Kolonnen werden wollen — Partnermodell
+       bevorzugt, sofern Qualität und Service beherrschbar bleiben"
+    - "Abhängigkeit von Smart-Meter-Rollout und Regulierung (EnWG §14a, §41a-Pflicht zu dynamischen
+       Tarifen) ist ein bekanntes Risiko, kein selbst kontrollierbarer Faktor"
+    - "Die schlanke, software-first Marke darf nicht in ein schwerfälliges Hardware-Image kippen"
+
+business_case:
+  topic: |
+    Das Engagement-Problem ist real und in der eigenen Kundenbasis belegt: Selbst interessierte
+    Kunden ändern ihr Verbrauchsverhalten kaum, der Mehrwert dynamischer Tarife wird kaum realisiert.
+    Die strategische Frage: Soll Voltaris Heimspeicher ins Angebot integrieren — geliefert, installiert,
+    gewartet, mit Nutzenanzeige über die zentrale App — sodass der Tarif-Vorteil automatisch (per
+    Software) statt durch Kundenverhalten entsteht? Und ist das für einen Software-/Vertriebs-Startup
+    ein tragfähiges, skalierbares Geschäft — oder eine kapital- und komplexitätsintensive Ablenkung?
+  solution_direction: |
+    Hypothese: Speicher end-to-end integrieren. Voltaris liefert, installiert und wartet die Batterie
+    (Partner oder eigene Organisation); die zentrale Software steuert Laden/Entladen gegen den
+    dynamischen Preis (und optimiert PV-Eigenverbrauch, wo vorhanden) und macht den Euro-Vorteil
+    sichtbar. Arbeitsannahme: Der Speicher verwandelt "Nutzen, der Handeln erfordert" in "Nutzen, der
+    automatisch entsteht" — löst also das Engagement-Problem und schafft wiederkehrenden Hardware-/
+    Serviceumsatz.
+
+    Zentrale offene Fragen für diese Analyse:
+    1. Was ermöglicht ein Speicher WIRKLICH für einen Haushalt am dynamischen Tarif — vor allem OHNE
+       eigene PV? (Reine Preis-Arbitrage ist ökonomisch dünn; mit PV deutlich besser.) Was ist der
+       ehrliche, quantifizierbare Nutzen pro Jahr?
+    2. Marktgröße & Segmente: Wie viele deutsche Haushalte kommen infrage? Eigenheim mit vs. ohne PV,
+       Immobilientyp, Anteil mit dynamischem Tarif oder Wechselbereitschaft.
+    3. Technische Landschaft & Komplexität: Speicher/Wechselrichter (sonnen, Tesla Powerwall, BYD,
+       E3/DC, SENEC, Huawei), Messkonzept/SMGW, §14a-Steuerbarkeit, Installations-/Service-Logistik,
+       Gewährleistung, VPP-/Netzdienst-Potenzial.
+    4. Was braucht es, um Kunden zu überzeugen — gerade angesichts des Engagement-Befunds? Reicht
+       "einrichten, vergessen, Ersparnis sehen"? Rolle von Anschaffungskosten, Finanzierung, Leasing,
+       "Speicher-as-a-Service"?
+    5. Geschäftsmodell: Verkauf vs. Leasing vs. Abo; Kapital-/Bilanzwirkung; Margen; wird aus einem
+       Software-Unternehmen faktisch ein Hardware-Logistik- und Installationsgeschäft — und ist das
+       gewollt und beherrschbar?
+  target_market: |
+    Primär: deutsche Eigenheimbesitzer, zunächst die bestehende Basis "interessierter" Kunden mit
+    dynamischem Tarif als Einstiegskeil. Segmente: PV-Besitzer (beste Speicher-Ökonomie) vs. ohne PV;
+    Ein-/Zweifamilienhäuser; Haushalte mit E-Auto/Wärmepumpe (höherer Verbrauch, bessere Nutzung).
+    Eine gut begründete, spezifische ICP-Empfehlung soll ein Ergebnis der Analyse sein — inklusive der
+    Frage, ob "ohne PV" überhaupt ein sinnvolles Zielsegment ist.
+
+run_options:
+  debate_rounds: 2        # große strategische Wette (Hardware-Pivot) → volle Debatte
+  research_depth: "deep"  # "quick" (3 Suchen/Agent) | "deep" (6+); Domäne ist öffentlich reich
+  language: "de"          # Research und Output auf Deutsch
+  mode: "auto"            # für die Beispielerzeugung durchlaufen; "step" für die Lehre

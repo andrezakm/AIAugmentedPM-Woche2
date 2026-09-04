@@ -2,7 +2,7 @@
 
 Willkommen. Dieses Repository enthält alle Materialien für Woche 2 des Kurses **AI-Augmented Product Management**.
 
-Du lernst in dieser Woche, wie du mit Claude Code aus einem Business Case einen vollständigen Analyse-Report baust — mit parallelen Research-Agenten, strukturierten Lösungshypothesen und einer echten Agenten-Debatte, die in eine finale Empfehlung mündet.
+Du lernst in dieser Woche, wie du mit Claude aus einem Business Case einen vollständigen Analyse-Report baust — mit parallelen Research-Agenten, strukturierten Lösungshypothesen und einer echten Agenten-Debatte, die in eine finale Empfehlung mündet.
 
 Das System heißt **Eval**. Es läuft vollständig in Claude Code, ist zu 100 % beobachtbar und produziert in einem einzigen Run bis zu 10 Markdown-Dokumente — inklusive Final Report mit Go/No-Go-Empfehlung.
 
@@ -10,20 +10,19 @@ Das System heißt **Eval**. Es läuft vollständig in Claude Code, ist zu 100 % 
 
 ## Voraussetzungen
 
-Du brauchst nur zwei Dinge:
+Du brauchst Claude — auf demselben Weg wie in Woche 1. **Beide Wege funktionieren für diesen Kurs gleich gut.** Nimm den, der bei dir schon läuft.
 
-### 1. Claude Code installieren
+### Weg A — Claude in der Desktop-App
 
-Claude Code ist die App, mit der du diesen Kurs durchläufst.
+Wenn Claude bei dir schon installiert ist — in vielen Firmen wird die Desktop-App zentral ausgerollt — brauchst du **nichts weiter**: keine Installation, kein Terminal. Du arbeitest direkt in der App.
 
-→ Installationsanleitung: [claude.ai/code](https://claude.ai/code)
+### Weg B — Claude Code im Terminal (in Cursor oder in der Terminal-App)
 
-Folge den Anweisungen auf der Seite für dein Betriebssystem.
-
-### 2. Ein Terminal
-
-- **Mac:** Das Programm heißt **Terminal** — bereits vorinstalliert (Programme → Dienstprogramme → Terminal, oder `Cmd + Leertaste` → "Terminal")
-- **Windows:** Suche nach **PowerShell** in der Windows-Suche und öffne es
+- **Claude Code installieren**, falls noch nicht vorhanden → [claude.ai/code](https://claude.ai/code). Folge den Anweisungen auf der Seite für dein Betriebssystem.
+- **Ein Terminal:**
+  - **Cursor (oder VS Code):** das eingebaute Terminal — Menü *Terminal → New Terminal*
+  - **Mac:** das Programm **Terminal** — bereits vorinstalliert (Programme → Dienstprogramme → Terminal, oder `Cmd + Leertaste` → "Terminal")
+  - **Windows:** **PowerShell** — in der Windows-Suche suchen und öffnen
 
 ---
 
@@ -31,45 +30,60 @@ Folge den Anweisungen auf der Seite für dein Betriebssystem.
 
 ### Schritt 1 — Kursordner herunterladen
 
-Gehe auf die Kursseite (den Link hast du per E-Mail erhalten) und klicke auf den grünen **Code**-Button → **Download ZIP**.
+Klicke auf dieser GitHub-Seite auf den grünen **Code**-Button → **Download ZIP**.
 
-Entpacke die ZIP-Datei in einen Ordner deiner Wahl — zum Beispiel auf dem Schreibtisch oder in deinen Dokumente-Ordner.
+Entpacke die ZIP-Datei:
 
-### Schritt 2 — Claude Code im Kursordner starten
+- **Windows:** Rechtsklick auf die Datei → **„Alle extrahieren"** → **„Extrahieren"**. (Nicht nur doppelklicken — dann stecken die Dateien noch im Archiv.)
+- **Mac:** Doppelklick genügt.
 
-Öffne dein Terminal und navigiere in den entpackten Ordner:
+Der entpackte Ordner heißt `AIAugmentedPM-Woche2-main`. Leg ihn ab, wo du magst — zum Beispiel auf dem Schreibtisch.
+
+### Schritt 2 — Claude im Kursordner öffnen
+
+Claude muss in **genau diesem Ordner** arbeiten — dem, in dem direkt die `CLAUDE.md` liegt, nicht eine Ebene darüber. Nimm den Weg, den du oben gewählt hast:
+
+**Weg A — Desktop-App**
+
+Öffne Claude, starte eine **neue Session** und lenke sie in den entpackten Kursordner.
+
+**Weg B — Terminal**
+
+In **Cursor**: *File → Open Folder* → den Ordner `AIAugmentedPM-Woche2-main` wählen, dann das Terminal öffnen und `claude` tippen.
+
+In der **Terminal-App** navigierst du selbst in den Ordner:
 
 **Mac:**
 ```bash
-cd ~/Desktop/AIAugmentedPM-Woche2
+cd ~/Desktop/AIAugmentedPM-Woche2-main
 claude
 ```
 
 **Windows (PowerShell):**
 ```powershell
-cd "$env:USERPROFILE\Desktop\AIAugmentedPM-Woche2"
+cd "$env:USERPROFILE\Desktop\AIAugmentedPM-Woche2-main"
 claude
 ```
 
 Falls du den Ordner woanders gespeichert hast, passe den Pfad entsprechend an.
 
-### Schritt 3 — WebSearch-Berechtigung setzen
+### Schritt 3 — Websuche erlauben
 
-Das Eval-System sucht im Internet nach Marktdaten, Wettbewerbern und Technologien. Damit das in Unter-Agenten funktioniert, muss WebSearch in deinen Claude-Einstellungen erlaubt sein.
+Das Eval-System recherchiert im Internet (Markt, Wettbewerber, Technologie). Damit das auch in den Unter-Agenten funktioniert, müssen WebSearch und WebFetch in deinen Claude-Einstellungen erlaubt sein.
 
-Tippe in Claude Code:
+Tippe in Claude:
 
 ```
 Füge WebSearch und WebFetch zu meinen erlaubten Tools hinzu.
 ```
 
-Claude erledigt das automatisch. Du musst das nur einmal machen — die Einstellung bleibt erhalten.
+Claude erledigt das selbst. Das musst du nur einmal machen — die Einstellung bleibt erhalten.
 
 ---
 
 ## Kurs starten
 
-Sobald Claude Code läuft, tippe einfach:
+Sobald Claude im Kursordner läuft, tippe einfach:
 
 ```
 Starte den Kurs
@@ -80,7 +94,9 @@ Claude liest den Kurs ein und beginnt sofort mit der Begrüßung. Du kannst wäh
 - **`überspringen`** tippen, um einen Schritt zu überspringen
 - **`stop`** tippen, um den Kurs zu unterbrechen
 
-Du kannst an einem beliebigen Schritt einsteigen:
+Außerhalb des Kurses kannst du Claude normal verwenden — er startet den Kurs nur, wenn du ihn ausdrücklich dazu aufforderst.
+
+Du kannst jederzeit an einem beliebigen Schritt einsteigen:
 
 ```
 Starte den Kurs ab Schritt 4
@@ -91,74 +107,70 @@ Starte den Kurs ab Schritt 4
 ## Dateistruktur
 
 ```
-AIAugmentedPM-Woche2/
+AIAugmentedPM-Woche2-main/
 ├── README.md                    ← Diese Datei — lies sie zuerst
-├── Woche2.md                    ← Der vollständige Kursinhalt
-├── eval/
-│   ├── input.yaml               ← Dein Business Case — hier startet alles
-│   ├── company.md               ← Beispiel-Firmenprofil (NeoEmployee)
-│   ├── strategy.md              ← Beispiel-Strategie (NeoEmployee)
-│   ├── FLOW.md                  ← Flussdiagramm des gesamten Systems
-│   ├── run.md                   ← Orchestrierungsanleitung für Claude Code
-│   └── prompts/                 ← Prompt-Templates für alle Agenten (13 Dateien)
-│       ├── p1_research_market.md
-│       ├── p1_research_technology.md
-│       ├── p1_research_problems.md
-│       ├── p2_analysis.md
-│       ├── p3_hypothesis_solution.md
-│       ├── p3_hypothesis_technology.md
-│       ├── p3_hypothesis_business.md
-│       ├── p4_debate_optimist.md
-│       ├── p4_debate_critic.md
-│       ├── p4_debate_technician.md
-│       ├── p4_debate_market.md
-│       ├── p4_debate_strategist.md
-│       └── p5_synthesis.md
-└── output/                      ← Leer — wird im Run befüllt
+├── CLAUDE.md                    ← Wird automatisch von Claude geladen
+├── Kurs_Woche2.md               ← Der vollständige Kursinhalt
+├── run.md                       ← Orchestrierung: wie ein Eval-Run abläuft
+├── FLOW.md                      ← Flussdiagramm des gesamten Systems
+├── Eval.md                      ← Prinzipien & Systemdesign (Referenz)
+├── EXTENSIONS.md                ← Ideen, wie man das System weiterbaut
+├── Eval - Flow Übersicht.html   ← Der Flow als Seite im Browser
+├── streamed-twirling-torvalds.md ← Der ursprüngliche Bauplan (Lektion „Das Monster bauen")
+├── context/
+│   ├── company.md               ← Wer sind wir? (statischer Kontext)
+│   └── strategy.md              ← Was ist die Strategie? (statischer Kontext)
+├── input/
+│   └── input.yaml               ← Dein Business Case — hier startet alles
+├── scripts/                     ← Prompt-Templates für alle Agenten (14 Dateien)
+│   ├── p1_research_market.md
+│   ├── … (Research, Analyse, Hypothesen, Debatte, Synthese)
+│   └── p5_synthesis.md
+├── output/                      ← Leer — deine eigenen Runs landen hier
+└── results/                     ← Fertige Beispiel-Läufe zum Anschauen
+    ├── neoemployee/
+    ├── voltaris/
+    └── hrperfect/
 ```
 
-Ein vollständiger Run erzeugt in `eval/output/run_YYYYMMDD_HHMMSS/`:
+Ein vollständiger Run erzeugt in `output/run_YYYYMMDD_HHMMSS/`:
 
 ```
-research_market.md
-research_technology.md
-research_problems.md
+research_market.md · research_technology.md · research_problems.md
 analysis_status_quo.md
-hypothesis_solution.md
-hypothesis_technology.md
-hypothesis_business_model.md
-debate_round_1.md
-debate_round_2.md          ← optional
+hypothesis_solution.md · hypothesis_technology.md · hypothesis_business_model.md
+debate_round_1.md · debate_round_2.md (optional)
 final_report.md
 ```
+
+**`results/`** enthält fertige Beispiel-Läufe — schau sie an, ohne selbst einen (token-intensiven) Run starten zu müssen. Für **eigene, saubere** Runs bleibt `output/` leer; die Beispiele in `results/` sind nur zum Lesen.
 
 ---
 
 ## Welches Modell verwenden?
 
-Für diesen Kurs reicht **Claude Sonnet 4.6** vollständig aus. So wählst du das Modell:
+Für den Kurs reicht **Sonnet** — wie in Woche 1. Der Eval-Run orchestriert viele Agenten über fünf Phasen; wenn du später einen ernsthaften eigenen Case mit `deep` laufen lässt, ist **Opus** die bessere Wahl: Es hält die lange, mehrstufige Orchestrierung besser zusammen und glättet die Debatte weniger zu Konsens.
 
-```bash
-claude --model claude-sonnet-4-6
-```
+So wählst du es:
 
-Oder nach dem Start mit `/model` in der Claude Code Oberfläche.
-
-**Hinweis:** Das Eval-System startet bis zu 20 parallele Agenten in einem vollständigen Run mit zwei Debattenrunden. Das verbraucht mehr Tokens als ein normales Gespräch — plane dafür etwas Zeit und Token-Budget ein.
+- **Desktop-App:** im Modell-Auswahlfeld wählen.
+- **Terminal:** `/model` tippen, Enter, dann aus der Liste wählen.
 
 ---
 
 ## Hinweis: Token-Limit
 
-Bei einem vollständigen Run (alle 6 Phasen, 2 Debattenrunden) werden deutlich mehr Tokens verbraucht als in Woche 1. Das Token-Limit von Claude Code wird alle 5 Stunden zurückgesetzt.
+Ein vollständiger Run (alle 5 Phasen, 2 Debattenrunden) startet bis zu 20 Agenten und verbraucht deutlich mehr Tokens als Woche 1. Bei intensiver Nutzung kann Claude dich bitten, kurz zu warten — das Token-Limit wird alle 5 Stunden zurückgesetzt. Das ist normal.
 
-**Empfehlung für den ersten Run:** Nutze den Step-Modus (`mode: "step"` in `input.yaml`). So pausiert das System nach jeder Phase — du kannst lesen, was produziert wurde, bevor es weitergeht.
+**Empfehlung für den ersten Run:** Step-Modus (`mode: "step"`) und `research_depth: "quick"` — beides ist in `input/input.yaml` so voreingestellt. Das System pausiert dann nach jeder Phase, und du siehst, was produziert wurde, bevor es weitergeht.
 
 ---
 
 ## Probleme?
 
-- **Agenten finden keine Suchergebnisse** → WebSearch-Berechtigung fehlt → Schritt 3 der Installation wiederholen
-- **Claude findet die Dateien nicht** → stelle sicher, dass du Claude Code **im Kursordner** gestartet hast (nicht in einem Unterordner)
-- **Run bricht ab** → der Step-Modus erlaubt es, an jedem Punkt fortzufahren; tippe "weiter mit Phase X"
-- **Kurs startet nicht** → stelle sicher, dass `Woche2.md` im selben Ordner liegt wie `README.md`
+- **Research-Agenten finden nichts** → WebSearch/WebFetch nicht erlaubt → Schritt 3 der Installation wiederholen.
+- **Claude findet die Dateien nicht** → stelle sicher, dass Claude **im Kursordner** arbeitet (dem, in dem direkt `CLAUDE.md` liegt — nicht eine Ebene darüber, nicht in einem Unterordner).
+- **Run bricht ab** → im Step-Modus kannst du fortfahren: „weiter mit Phase X".
+- **Ergebnis wirkt unsauber / mischt sich mit den Beispielen** → für einen sauberen Lauf `output/` leeren und keine alten Läufe oder `results/` als Eingabe verwenden. (Guter Moment zu verstehen, wie stark Kontext das Ergebnis prägt.)
+- **Kurs startet nicht** → stelle sicher, dass du das Repository vollständig heruntergeladen hast (nicht nur einzelne Dateien) und Claude neu startest.
+- Bei allem anderen: Nachricht an Markus — oder im nächsten Call fragen.

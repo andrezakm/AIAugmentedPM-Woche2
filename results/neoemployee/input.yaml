@@ -82,7 +82,7 @@ business_case:
     One output of this analysis should be a well-reasoned, specific ICP recommendation.
 
 run_options:
-  debate_rounds: 1        # 1 or 2
+  debate_rounds: 2        # 1 or 2 — this run: 2 rounds (see debate_round_2.md)
   research_depth: "deep"  # "quick" (3 searches/agent) | "deep" (6 searches/agent)
   language: "en"          # Research and output in English
   mode: "step"            # "step" (pause after each phase) | "auto" (fully automatic)

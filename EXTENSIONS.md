@@ -19,7 +19,7 @@ Der eingegebene Kontext wird als `annotation_phase_X.md` gespeichert und allen f
 
 ## 2. Klärungsfragen vor dem Start (Pre-Run Clarification)
 
-**Problem:** Das Input-YAML hat strukturelle Lücken — nicht weil der Nutzer nichts weiß, sondern weil die richtigen Fragen nicht gestellt werden. Beispiel HR Harness: "Compliance Layer exists as TC infrastructure" klingt nach internem Tool, nicht nach "wir sind der trusted compliance partner der HR-Abteilungen inkl. Betriebsräte."
+**Problem:** Das Input-YAML hat strukturelle Lücken — nicht weil der Nutzer nichts weiß, sondern weil die richtigen Fragen nicht gestellt werden. Beispiel HR Harness: "Compliance Layer exists as HRPerfect infrastructure" klingt nach internem Tool, nicht nach "wir sind der trusted compliance partner der HR-Abteilungen inkl. Betriebsräte."
 
 **Erweiterung:** Nach dem Lesen des YAML, aber vor Phase 1, startet ein Clarification-Agent der 3-5 gezielte Fragen stellt:
 - Welche bestehenden Kundenbeziehungen sind tiefgehend genug um die GTM-These zu tragen?

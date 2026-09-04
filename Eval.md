@@ -160,12 +160,3 @@ flowchart TD
     D2 --> FINAL
 ```
 
----
-
-## Offene Fragen für die Planungsphase
-
-1. Welches Modell / Framework soll die Agenten antreiben? (Claude API, LangGraph, eigenes Orchestrierungsskript?)
-2. Wie wird Research konkret durchgeführt? (Web Search, RAG, manuelle Dokumente?)
-3. Soll das System interaktiv (CLI / UI) oder vollautomatisch laufen?
-4. Wie wird der Input strukturiert übergeben? (YAML, Formular, freier Text?)
-5. Welche Sprache / Laufzeitumgebung? (Python, TypeScript, andere?)

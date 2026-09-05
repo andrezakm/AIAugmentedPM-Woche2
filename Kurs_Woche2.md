@@ -245,6 +245,8 @@ Das ist der Unterschied zwischen Research und Analyse:
 
 Der Ist-Analyse-Agent liest mehr als jeder andere Agent im System — alle drei Research-Dateien plus den vollen Input-Kontext. Deswegen läuft er alleine, nicht parallel. Mehr Kontext braucht mehr Fokus.
 
+Eine Eigenheit, die du im Ablauf siehst: Claude Code lässt Subagenten keine Datei schreiben, deren Name mit „analysis" beginnt. Der Agent gibt seine Analyse deshalb als Text zurück, und Claude schreibt sie unverändert in die Datei. Kein Fehler, so ist es gebaut.
+
 Was er produziert: Chancen, relevante Technologien, adressierte Probleme, Lücken und Risiken — alles gefiltert durch die Linse eurer Firma und Strategie.
 
 Lies `analysis_status_quo.md` wenn er fertig ist. Achte besonders auf die Lücken-Sektion.
@@ -261,7 +263,7 @@ Lies `analysis_status_quo.md` wenn er fertig ist. Achte besonders auf die Lücke
 
 ### SCHRITT 7 — Phase 3: Lösungshypothesen
 
-**Lernziel:** Du erlebst, wie drei verschiedene Agenten denselben Research-Pool aus drei verschiedenen Winkeln lesen — und drei kohärente Hypothesen produzieren.
+**Lernziel:** Du erlebst, wie drei verschiedene Agenten denselben Research-Pool aus drei verschiedenen Winkeln lesen — und drei kohärente Hypothesen produzieren, die aufeinander aufbauen.
 
 Tippe:
 
@@ -269,7 +271,7 @@ Tippe:
 Weiter mit Phase 3.
 ```
 
-Drei Agenten starten gleichzeitig:
+Erst startet ein Agent, dann zwei parallel — Technologie und Business brauchen die konkrete Lösung als Grundlage, sonst raten sie:
 
 | Agent | Fokus | Output |
 |---|---|---|
@@ -426,7 +428,7 @@ Das System ist eine Sandbox — du kannst nichts kaputt machen. Je mehr du damit
 | Phase | Parallele Agenten | Was sie verhindert |
 |---|---|---|
 | Research | 3 | Confirmation Bias durch gemeinsamen Kontext |
-| Hypothesen | 3 | Überkomplexe All-in-one-Agenten |
+| Hypothesen | 1, dann 2 | Überkomplexe All-in-one-Agenten — und Raten, wo die Lösung fehlt |
 | Debatte | 5 | Premature Closure |
 | Final Report | 1 | Aber liest alle vorherigen Dokumente |
 

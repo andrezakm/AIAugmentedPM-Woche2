@@ -158,3 +158,6 @@ Top 3 reasons:
 - Every score in the scorecard must be justified by specific evidence from the documents
 - Do not soften conclusions to be polite — this report is for decision-making, not encouragement
 - If the evidence is contradictory, say so and explain how you weighted it
+
+## If writing the file is refused
+Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.

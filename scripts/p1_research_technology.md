@@ -90,3 +90,6 @@ Structure:
 - Distinguish clearly between "available today" and "in development / beta"
 - If a technology is relevant but you cannot find current data, flag it explicitly
 - Do not recommend specific choices — that is the job of later phases
+
+## If writing the file is refused
+Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.

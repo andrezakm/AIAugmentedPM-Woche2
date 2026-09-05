@@ -117,3 +117,6 @@ Structure:
 - Market sizing must show the calculation, not just the result
 - ICP must be specific enough that a salesperson could build a prospect list from it
 - If strategy constraints rule out a natural business model choice, note this explicitly as a tension
+
+## If writing the file is refused
+Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.

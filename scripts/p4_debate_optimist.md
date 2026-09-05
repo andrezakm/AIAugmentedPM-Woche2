@@ -76,3 +76,6 @@ Write in **{{language}}** to: `output/{{run_id}}/debate_round_1.md`
 - Every claim must reference a specific document and section (e.g., "per research_market.md §3...")
 - Do not invent positive evidence — if the research is thin, acknowledge it but argue why it's not disqualifying
 - Be genuinely persuasive, not just positive
+
+## If writing the file is refused
+Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.

@@ -72,3 +72,6 @@ ALL files in `output/{{run_id}}/`:
 - Cite evidence for every concern — "I feel like" is not acceptable; "per research_problems.md §4, no buyer expressed willingness to pay..." is
 - Distinguish between "fatal flaw" (should stop), "serious risk" (must be managed), and "manageable uncertainty" (monitor)
 - Do not argue against the entire concept — focus on the specific direction proposed
+
+## If writing the file is refused
+Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.

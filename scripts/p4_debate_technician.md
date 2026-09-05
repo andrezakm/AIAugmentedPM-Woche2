@@ -76,3 +76,6 @@ ALL files in `output/{{run_id}}/`:
 - Every concern must be grounded in research_technology.md — if you're drawing on general knowledge, note "general engineering knowledge, not in research"
 - Distinguish between "this can't be built" and "this is harder than the hypothesis acknowledges"
 - Avoid vague concerns ("scalability might be an issue") — be specific ("the proposed use of X will hit Y limit at Z scale")
+
+## If writing the file is refused
+Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.

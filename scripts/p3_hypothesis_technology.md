@@ -90,3 +90,6 @@ Structure:
 - Every technology recommendation must be grounded in research_technology.md — if it's not there, add "Note: not covered in research — verify before adopting"
 - Do not estimate calendar time — only relative effort
 - Flag if the recommended architecture requires skills the company does not have (per company description)
+
+## If writing the file is refused
+Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.

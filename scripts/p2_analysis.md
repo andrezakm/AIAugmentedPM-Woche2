@@ -84,3 +84,6 @@ Structure:
 - Every claim must be traceable to one of the three research files (cite which one)
 - Do not introduce new facts from memory — if you notice a gap in the research, flag it as "Research gap: [description]" rather than filling it in yourself
 - Be direct about weaknesses in the solution direction — this is not the time for encouragement
+
+## Output
+Do **not** write a file. Claude Code refuses subagent writes to files named `analysis*.md`. Return the complete analysis — all sections, in **{{language}}** — as your final message. The orchestrator writes it verbatim to `output/{{run_id}}/analysis_status_quo.md`.

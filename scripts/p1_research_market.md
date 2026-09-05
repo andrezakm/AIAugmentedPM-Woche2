@@ -93,3 +93,6 @@ Structure:
 - Never state a number without a source
 - If you cannot find reliable data for a sub-topic, write: "Insufficient public data found. Searches conducted: [list]. Recommend primary research."
 - Do not speculate beyond what the sources support
+
+## If writing the file is refused
+Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.

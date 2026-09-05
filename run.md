@@ -29,9 +29,28 @@ Read `input/input.yaml`. Check:
 
 If any required field is empty: stop and ask the user to complete it.
 
-### Step 2: Create run directory
+### Step 2: Create run directory and status file
 Create: `output/run_{{YYYYMMDD_HHMMSS}}/`
 This is the `{{run_id}}` used in all prompts.
+
+Then create `output/{{run_id}}/STATUS.md` — the single source of truth for the state of this run:
+
+```
+# Run status — {{run_id}}
+mode: {{mode}} · research_depth: {{research_depth}} · debate_rounds: {{debate_rounds}} · language: {{language}}
+
+| Phase | Status | Files |
+|---|---|---|
+| 1 Research | pending | |
+| 2 Status quo | pending | |
+| 3 Hypotheses | pending | |
+| 4 Debate R1 | pending | |
+| 4 Debate R2 | pending / skipped | |
+| 5 Final report | pending | |
+| 6 Flow doc | pending | |
+```
+
+Update this table after every phase (status `done`, file names). Before starting any phase, read `STATUS.md` and decide the next step from it — not from memory. This keeps the run safe across context compaction and makes "Starte den Lauf ab Phase 4" possible: read `STATUS.md`, verify the listed files exist, continue.
 
 ### Step 3: Prepare context variables
 Extract from input.yaml:
@@ -66,6 +85,17 @@ Run all phases sequentially without pausing. Output a one-line status after each
 
 ---
 
+## Working Rules for the Orchestrator
+
+These rules keep the orchestrator's growing context from influencing any result:
+
+1. **The orchestrator never judges content — it only transports.** Every judgment (status quo synthesis, moderation, final report) happens inside a dedicated agent with a fresh, narrow context. When an agent returns a document as text, the orchestrator writes it to the target file **verbatim** — no summarizing, no smoothing, no commentary.
+2. **Agents read their inputs from disk, never from the conversation.** The orchestrator passes file paths and the context variables, not file contents. What the orchestrator remembers or has forgotten is irrelevant; the truth is in `output/{{run_id}}/`.
+3. **The state of the run lives in `STATUS.md`**, not in the orchestrator's memory (see Pre-Run Step 2).
+4. **Fallback when an agent cannot write its file.** Claude Code refuses `Write` calls from subagents for `.md` files whose name starts with `report`, `summary`, `findings` or `analysis` ("Subagents should return findings as text, not write report files"). Of the files in this system only `analysis_status_quo.md` is affected, so Phase 2 is designed around it. If any other write is refused, the agent returns the complete document as its final message and the orchestrator writes it verbatim to the target path. Never rename files or use the shell to get around the rule.
+
+---
+
 ## PHASE 1 — Research (parallel)
 
 **Launch 3 agents simultaneously** (in the same message, as parallel Agent tool calls):
@@ -94,7 +124,7 @@ Each agent:
 **Launch 1 agent:**
 - Prompt: `scripts/p2_analysis.md`
 - Input: reads the 3 research files from Phase 1
-- Output: `output/{{run_id}}/analysis_status_quo.md`
+- Output: the agent **returns the complete analysis as text** (it cannot write `analysis_*.md` itself, see Working Rule 4). The orchestrator writes it **verbatim** to `output/{{run_id}}/analysis_status_quo.md`.
 
 **Phase 2 complete when:** `analysis_status_quo.md` exists and contains all 5 required sections including "Key Tensions & Open Questions".
 
@@ -102,17 +132,24 @@ Each agent:
 
 ---
 
-## PHASE 3 — Solution Hypotheses (parallel)
+## PHASE 3 — Solution Hypotheses (sequential, then parallel)
 
-**Launch 3 agents simultaneously:**
+**Step 3a — Launch 1 agent first:**
 
 | Agent | Prompt file | Output file |
 |---|---|---|
 | hypothesis-solution | `scripts/p3_hypothesis_solution.md` | `output/{{run_id}}/hypothesis_solution.md` |
+
+Wait until `hypothesis_solution.md` exists. The technology and business agents build on this concrete solution design — launching them earlier makes them guess the solution from the status quo analysis.
+
+**Step 3b — Then launch 2 agents simultaneously:**
+
+| Agent | Prompt file | Output file |
+|---|---|---|
 | hypothesis-technology | `scripts/p3_hypothesis_technology.md` | `output/{{run_id}}/hypothesis_technology.md` |
 | hypothesis-business | `scripts/p3_hypothesis_business.md` | `output/{{run_id}}/hypothesis_business_model.md` |
 
-Each agent reads Phase 1 outputs + `analysis_status_quo.md`.
+All three agents read Phase 1 outputs + `analysis_status_quo.md`; technology and business additionally read `hypothesis_solution.md`.
 
 **Phase 3 complete when:** All 3 hypothesis files exist.
 
@@ -176,7 +213,8 @@ The Round 2 persona prompts should instruct agents to focus on the specific tens
 ## PHASE 6 — Flow Documentation
 
 After all phases complete:
-- Update `FLOW.md` with the actual Mermaid diagram reflecting this run
+- Write `output/{{run_id}}/flow.md`: the actual Mermaid diagram of **this** run (agents launched, files produced, whether Round 2 ran). Do not touch the root `FLOW.md` — that is the system's documentation, and the project rule is to write only inside the run folder.
+- Mark all phases `done` in `STATUS.md`
 - Output a brief run summary to the user:
   - Files created
   - Overall recommendation (from final_report.md)
@@ -185,6 +223,9 @@ After all phases complete:
 ---
 
 ## Error Handling
+
+If an agent's `Write` call is refused with "Subagents should return findings as text…":
+- The agent returns the document as text; the orchestrator writes it verbatim (Working Rule 4). This is not a failure.
 
 If an agent fails to produce its output file:
 - Report which agent failed and why
@@ -202,6 +243,7 @@ If research returns no useful results:
 
 ```
 output/{{run_id}}/
+  ✓ STATUS.md
   ✓ research_market.md
   ✓ research_technology.md
   ✓ research_problems.md
@@ -212,4 +254,5 @@ output/{{run_id}}/
   ✓ debate_round_1.md
   ○ debate_round_2.md  (optional)
   ✓ final_report.md
+  ✓ flow.md
 ```

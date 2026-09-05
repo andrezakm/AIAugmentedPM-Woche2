@@ -82,3 +82,6 @@ ALL files in `output/{{run_id}}/`:
 - Strategic claims must be grounded in the documents — do not import generic strategy frameworks without connecting them to the specific case
 - Be honest about opportunity cost — avoid anchoring too strongly on the proposed direction just because it's the focus of this analysis
 - If the direction fundamentally conflicts with the stated strategy, say so clearly
+
+## If writing the file is refused
+Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.

@@ -21,11 +21,11 @@ flowchart TD
     IST --> STEP2{{"step mode:\npause?"}}
     STEP2 -->|"confirmed"| P3
 
-    P3["PHASE 3 — Solution Hypotheses\n(3 parallel background agents)"]
+    P3["PHASE 3 — Solution Hypotheses\n(1 agent first, then 2 parallel agents)"]
 
     P3 --> H1["💡 Solution Hypothesis\nhypothesis_solution.md"]
-    P3 --> H2["⚙️ Technology Hypothesis\nhypothesis_technology.md"]
-    P3 --> H3["💰 Business Model Hypothesis\nhypothesis_business_model.md"]
+    H1 --> H2["⚙️ Technology Hypothesis\nhypothesis_technology.md\nreads hypothesis_solution.md"]
+    H1 --> H3["💰 Business Model Hypothesis\nhypothesis_business_model.md\nreads hypothesis_solution.md"]
 
     H1 & H2 & H3 --> STEP3{{"step mode:\npause?"}}
     STEP3 -->|"confirmed"| P4
@@ -62,7 +62,7 @@ flowchart TD
 
     P5 --> FINAL["📄 Final Report\nfinal_report.md\nGO / CONDITIONAL GO / PIVOT / NO-GO\n+ Scorecard + Next Steps"]
 
-    FINAL --> P6["PHASE 6 — Documentation\nFLOW.md updated"]
+    FINAL --> P6["PHASE 6 — Documentation\nflow.md written into the run folder"]
 ```
 
 ---
@@ -72,8 +72,8 @@ flowchart TD
 | Phase | Parallel agents | Sequential agents | Notes |
 |---|---|---|---|
 | Phase 1 | 3 (market, tech, problems) | — | Background; each runs 6–26 searches |
-| Phase 2 | — | 1 (status quo analysis) | Reads all 3 research files |
-| Phase 3 | 3 (solution, tech, business) | — | Background; reads research + analysis |
+| Phase 2 | — | 1 (status quo analysis) | Reads all 3 research files; returns text, orchestrator writes the file |
+| Phase 3 | 2 (tech, business) after 1 (solution) | 1 (solution) | Tech and business read hypothesis_solution.md |
 | Phase 4 R1 | 5 (debate personas) | 1 (moderator) | Personas append to shared file |
 | Phase 4 R2 | 5 (debate personas) | 1 (moderator) | Optional; triggered by Moderator R1 |
 | Phase 5 | — | 1 (synthesis) | Reads all 9 intermediate files |
@@ -107,6 +107,8 @@ output/run_YYYYMMDD_HHMMSS/
 ---
 
 ## Architecture Notes (from the NeoEmployee run — see `results/neoemployee/`)
+
+**Subagent write rule (Claude Code ≥ 2.1):** subagents cannot `Write` `.md` files whose name starts with `report`, `summary`, `findings` or `analysis`. In this system that is only `analysis_status_quo.md`: the Phase 2 agent returns its analysis as text and the orchestrator writes the file verbatim. Every prompt carries the same fallback for any other refused write. The run's state lives in `STATUS.md` inside the run folder, so the orchestrator decides from the file, not from memory.
 
 **Shared-file append pattern:** All 5 debate personas write to a single file by appending. This works reliably but requires the file to be pre-created with a header before agents are launched. The moderator runs sequentially *after* all personas complete (waiting for all task notifications).
 

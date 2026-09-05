@@ -93,3 +93,6 @@ Structure:
 - Distinguish between "users" (who use the product) and "buyers" (who pay for it) — their problems may differ
 - If you can't find expressed problems in public, state this clearly — it may mean the market is immature or that buyers are hard to reach publicly
 - Do not invent problems — if the evidence is thin, say so
+
+## If writing the file is refused
+Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.

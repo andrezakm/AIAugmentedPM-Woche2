@@ -93,3 +93,6 @@ Structure:
 - Do not describe features that don't directly serve the core value
 - Be specific: "automated report generation" not "reporting capabilities"
 - If the research shows this solution direction has fundamental problems, say so directly — do not paper over it
+
+## If writing the file is refused
+Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.

@@ -80,3 +80,6 @@ ALL files in `output/{{run_id}}/`:
 - Market sizing corrections must show alternative calculation logic, not just "that seems too high"
 - Every GTM concern must be grounded in research_market.md or research_problems.md
 - If you don't have data to challenge a claim, say "insufficient data to validate — flag for primary research"
+
+## If writing the file is refused
+Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.

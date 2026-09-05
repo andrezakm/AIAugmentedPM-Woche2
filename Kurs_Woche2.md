@@ -111,7 +111,7 @@ Zeig mir results/voltaris/final_report.md
 
 Das ist das Endprodukt eines kompletten Laufs: Executive Summary, eine Scorecard über fünf Dimensionen, eine klare Empfehlung (GO / CONDITIONAL GO / PIVOT / NO-GO) mit Bedingungen und offenen Fragen.
 
-Schau dir dann ruhig an, was **daneben** liegt: die drei `research_*.md`, `analysis_status_quo.md`, die drei `hypothesis_*.md`, `debate_round_1.md` (und `_2`). Genau diese Zwischenschritte hat das System nacheinander erzeugt — der Final Report verdichtet sie nur. Das ist die 100-%-Beobachtbarkeit: du kannst jeden Satz im Report bis zu seiner Quelle zurückverfolgen.
+Schau dir dann ruhig an, was **daneben** liegt: die drei `research_*.md`, `status_quo_analysis.md`, die drei `hypothesis_*.md`, `debate_round_1.md` (und `_2`). Genau diese Zwischenschritte hat das System nacheinander erzeugt — der Final Report verdichtet sie nur. Das ist die 100-%-Beobachtbarkeit: du kannst jeden Satz im Report bis zu seiner Quelle zurückverfolgen.
 
 **Hinweis:** `results/` ist nur zum Anschauen. Deine eigenen Läufe landen in `output/`.
 
@@ -245,11 +245,9 @@ Das ist der Unterschied zwischen Research und Analyse:
 
 Der Ist-Analyse-Agent liest mehr als jeder andere Agent im System — alle drei Research-Dateien plus den vollen Input-Kontext. Deswegen läuft er alleine, nicht parallel. Mehr Kontext braucht mehr Fokus.
 
-Eine Eigenheit, die du im Ablauf siehst: Claude Code lässt Subagenten keine Datei schreiben, deren Name mit „analysis" beginnt. Der Agent gibt seine Analyse deshalb als Text zurück, und Claude schreibt sie unverändert in die Datei. Kein Fehler, so ist es gebaut.
-
 Was er produziert: Chancen, relevante Technologien, adressierte Probleme, Lücken und Risiken — alles gefiltert durch die Linse eurer Firma und Strategie.
 
-Lies `analysis_status_quo.md` wenn er fertig ist. Achte besonders auf die Lücken-Sektion.
+Lies `status_quo_analysis.md` wenn er fertig ist. Achte besonders auf die Lücken-Sektion.
 
 ```
 ─────────────────────────────────────

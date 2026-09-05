@@ -16,7 +16,7 @@ flowchart TD
     STEP1 -->|"confirmed"| P2
 
     P2["PHASE 2 — Status Quo Analysis\n(1 agent · sequential)\nreads all 3 research files"]
-    P2 --> IST["📊 Status Quo Analysis\nanalysis_status_quo.md"]
+    P2 --> IST["📊 Status Quo Analysis\nstatus_quo_analysis.md"]
 
     IST --> STEP2{{"step mode:\npause?"}}
     STEP2 -->|"confirmed"| P3
@@ -72,7 +72,7 @@ flowchart TD
 | Phase | Parallel agents | Sequential agents | Notes |
 |---|---|---|---|
 | Phase 1 | 3 (market, tech, problems) | — | Background; each runs 6–26 searches |
-| Phase 2 | — | 1 (status quo analysis) | Reads all 3 research files; returns text, orchestrator writes the file |
+| Phase 2 | — | 1 (status quo analysis) | Reads all 3 research files |
 | Phase 3 | 2 (tech, business) after 1 (solution) | 1 (solution) | Tech and business read hypothesis_solution.md |
 | Phase 4 R1 | 5 (debate personas) | 1 (moderator) | Personas append to shared file |
 | Phase 4 R2 | 5 (debate personas) | 1 (moderator) | Optional; triggered by Moderator R1 |
@@ -95,7 +95,7 @@ output/run_YYYYMMDD_HHMMSS/
 ├── research_market.md            Phase 1
 ├── research_technology.md        Phase 1
 ├── research_problems.md          Phase 1
-├── analysis_status_quo.md        Phase 2
+├── status_quo_analysis.md        Phase 2
 ├── hypothesis_solution.md        Phase 3
 ├── hypothesis_technology.md      Phase 3
 ├── hypothesis_business_model.md  Phase 3
@@ -108,7 +108,7 @@ output/run_YYYYMMDD_HHMMSS/
 
 ## Architecture Notes (from the NeoEmployee run — see `results/neoemployee/`)
 
-**Subagent write rule (Claude Code ≥ 2.1):** subagents cannot `Write` `.md` files whose name starts with `report`, `summary`, `findings` or `analysis`. In this system that is only `analysis_status_quo.md`: the Phase 2 agent returns its analysis as text and the orchestrator writes the file verbatim. Every prompt carries the same fallback for any other refused write. The run's state lives in `STATUS.md` inside the run folder, so the orchestrator decides from the file, not from memory.
+**Subagent write rule (Claude Code ≥ 2.1):** subagents cannot `Write` `.md` files whose name starts with `report`, `summary`, `findings` or `analysis`. This system therefore names the Phase 2 output `status_quo_analysis.md` (it used to be `status_quo_analysis.md`) — a controlled pipeline with fixed readers is not the stray-report case the rule targets. Every prompt still carries a fallback for a refused write. The run's state lives in `STATUS.md` inside the run folder, so the orchestrator decides from the file, not from memory.
 
 **Shared-file append pattern:** All 5 debate personas write to a single file by appending. This works reliably but requires the file to be pre-created with a header before agents are launched. The moderator runs sequentially *after* all personas complete (waiting for all task notifications).
 

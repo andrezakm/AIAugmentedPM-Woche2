@@ -17,7 +17,7 @@ OUTPUT LANGUAGE: {{language}}
 ALL files in `output/{{run_id}}/`:
 - research_market.md
 - research_problems.md
-- analysis_status_quo.md
+- status_quo_analysis.md
 - hypothesis_solution.md
 - hypothesis_business_model.md
 

@@ -17,7 +17,7 @@ OUTPUT LANGUAGE: {{language}}
 ## Input Files to Read
 - `output/{{run_id}}/research_market.md`
 - `output/{{run_id}}/research_problems.md`
-- `output/{{run_id}}/analysis_status_quo.md`
+- `output/{{run_id}}/status_quo_analysis.md`
 - `output/{{run_id}}/hypothesis_solution.md`
 
 ## Your Task
@@ -63,7 +63,7 @@ Structure:
 ```
 # Business Model Hypothesis
 
-> Based on: research_market.md, research_problems.md, analysis_status_quo.md, hypothesis_solution.md
+> Based on: research_market.md, research_problems.md, status_quo_analysis.md, hypothesis_solution.md
 > Company: {{company_name}} | Date: {{date}}
 
 ## 1. Ideal Customer Profile (ICP)

@@ -17,7 +17,7 @@ DEBATE ROUND: {{round_number}}
 - `output/{{run_id}}/debate_round_{{round_number}}.md` (contains all 5 agent sections)
 
 Also read for full context:
-- `output/{{run_id}}/analysis_status_quo.md`
+- `output/{{run_id}}/status_quo_analysis.md`
 - `output/{{run_id}}/hypothesis_solution.md`
 - `output/{{run_id}}/hypothesis_business_model.md`
 

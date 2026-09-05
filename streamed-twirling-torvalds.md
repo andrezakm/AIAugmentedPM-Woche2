@@ -31,7 +31,7 @@ prompts/                     → Prompt-Templates für jeden Agenten-Typ
   research_market.md
   research_technology.md
   research_problems.md
-  analysis_status_quo.md
+  status_quo_analysis.md
   hypothesis_*.md
   debate_persona_*.md
   synthesis.md
@@ -39,7 +39,7 @@ output/                      → Alle Zwischendateien
   research_market.md
   research_technology.md
   research_problems.md
-  analysis_status_quo.md
+  status_quo_analysis.md
   hypothesis_solution.md
   hypothesis_technology.md
   hypothesis_business_model.md
@@ -82,7 +82,7 @@ Jeder Agent:
 - Liest alle 3 Research-Outputs
 - Kontextualisiert gegen den spezifischen Input (Firma + Strategie + Lösungsrichtung)
 - Identifiziert: relevante Chancen, passende Technologien, adressierte Probleme, Lücken & Risiken
-- Output: `analysis_status_quo.md`
+- Output: `status_quo_analysis.md`
 
 ### Phase 3 — Lösungshypothesen (3 parallele Agenten)
 **Alle drei gleichzeitig gestartet:**
@@ -158,7 +158,7 @@ Output: `final_report.md`
       research_market.md
       research_technology.md
       research_problems.md
-      analysis_status_quo.md
+      status_quo_analysis.md
       hypothesis_solution.md
       hypothesis_technology.md
       hypothesis_business_model.md

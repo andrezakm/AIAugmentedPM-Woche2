@@ -137,7 +137,7 @@ Ein vollständiger Run erzeugt in `output/run_YYYYMMDD_HHMMSS/`:
 
 ```
 research_market.md · research_technology.md · research_problems.md
-analysis_status_quo.md
+status_quo_analysis.md
 hypothesis_solution.md · hypothesis_technology.md · hypothesis_business_model.md
 debate_round_1.md · debate_round_2.md (optional)
 final_report.md

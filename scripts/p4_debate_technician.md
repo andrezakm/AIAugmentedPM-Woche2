@@ -16,7 +16,7 @@ OUTPUT LANGUAGE: {{language}}
 ## Input Files to Read
 ALL files in `output/{{run_id}}/`:
 - research_technology.md
-- analysis_status_quo.md
+- status_quo_analysis.md
 - hypothesis_solution.md
 - hypothesis_technology.md
 

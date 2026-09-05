@@ -15,7 +15,7 @@ OUTPUT LANGUAGE: {{language}}
 ## Input Files to Read
 - `output/{{run_id}}/research_market.md`
 - `output/{{run_id}}/research_problems.md`
-- `output/{{run_id}}/analysis_status_quo.md`
+- `output/{{run_id}}/status_quo_analysis.md`
 
 ## Your Task
 
@@ -51,7 +51,7 @@ Structure:
 ```
 # Solution Hypothesis
 
-> Based on: research_market.md, research_problems.md, analysis_status_quo.md
+> Based on: research_market.md, research_problems.md, status_quo_analysis.md
 > Company: {{company_name}} | Date: {{date}}
 
 ## 1. Concrete Solution Description

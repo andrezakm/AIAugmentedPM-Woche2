@@ -16,7 +16,7 @@ OUTPUT LANGUAGE: {{language}}
 - `output/{{run_id}}/research_market.md`
 - `output/{{run_id}}/research_technology.md`
 - `output/{{run_id}}/research_problems.md`
-- `output/{{run_id}}/analysis_status_quo.md`
+- `output/{{run_id}}/status_quo_analysis.md`
 - `output/{{run_id}}/hypothesis_solution.md`
 - `output/{{run_id}}/hypothesis_technology.md`
 - `output/{{run_id}}/hypothesis_business_model.md`
@@ -145,7 +145,7 @@ Top 3 reasons:
 - research_market.md — Market research (Phase 1)
 - research_technology.md — Technology research (Phase 1)
 - research_problems.md — Problem research (Phase 1)
-- analysis_status_quo.md — Status quo analysis (Phase 2)
+- status_quo_analysis.md — Status quo analysis (Phase 2)
 - hypothesis_solution.md — Solution hypothesis (Phase 3)
 - hypothesis_technology.md — Technology hypothesis (Phase 3)
 - hypothesis_business_model.md — Business model hypothesis (Phase 3)

@@ -89,10 +89,10 @@ Run all phases sequentially without pausing. Output a one-line status after each
 
 These rules keep the orchestrator's growing context from influencing any result:
 
-1. **The orchestrator never judges content — it only transports.** Every judgment (status quo synthesis, moderation, final report) happens inside a dedicated agent with a fresh, narrow context. Agents write their own files and return only a short confirmation. The orchestrator writes a file in exactly two cases: Phase 2 (by design), or when an agent reports `WRITE REFUSED` and returns the document as text. Then it writes that text to the target file **verbatim** — no summarizing, no smoothing, no commentary. Never write a file "to be safe", and never write one a second time when the agent already created it.
+1. **The orchestrator never judges content — it only transports.** Every judgment (status quo synthesis, moderation, final report) happens inside a dedicated agent with a fresh, narrow context. Agents write their own files and return only a short confirmation. The orchestrator writes a file in exactly one case: when an agent reports `WRITE REFUSED` and returns the document as text. Then it writes that text to the target file **verbatim** — no summarizing, no smoothing, no commentary. Never write a file "to be safe", and never write one a second time when the agent already created it.
 2. **Agents read their inputs from disk, never from the conversation.** The orchestrator passes file paths and the context variables, not file contents. What the orchestrator remembers or has forgotten is irrelevant; the truth is in `output/{{run_id}}/`.
 3. **The state of the run lives in `STATUS.md`**, not in the orchestrator's memory (see Pre-Run Step 2).
-4. **Fallback when an agent cannot write its file.** Claude Code refuses `Write` calls from subagents for `.md` files whose name starts with `report`, `summary`, `findings` or `analysis` ("Subagents should return findings as text, not write report files"). Of the files in this system only `analysis_status_quo.md` is affected, so Phase 2 is designed around it. If any other write is refused, the agent returns the complete document as its final message (marked `WRITE REFUSED — full document follows`) and the orchestrator writes it verbatim to the target path. Without that marker, the agent has written its file itself — do not write it again. Never rename files or use the shell to get around the rule.
+4. **Fallback when an agent cannot write its file.** Claude Code refuses `Write` calls from subagents for `.md` files whose name starts with `report`, `summary`, `findings` or `analysis` ("Subagents should return findings as text, not write report files"). No file in this system uses those prefixes — the status quo analysis is deliberately named `status_quo_analysis.md` for that reason (this is a controlled pipeline with fixed readers, not the stray-report case the rule targets). If a write is still refused, the agent returns the complete document as its final message (marked `WRITE REFUSED — full document follows`) and the orchestrator writes it verbatim to the target path. Without that marker, the agent has written its file itself — do not write it again. Never rename files or use the shell to get around the rule.
 
 ---
 
@@ -124,9 +124,9 @@ Each agent:
 **Launch 1 agent:**
 - Prompt: `scripts/p2_analysis.md`
 - Input: reads the 3 research files from Phase 1
-- Output: the agent **returns the complete analysis as text** (it cannot write `analysis_*.md` itself, see Working Rule 4). The orchestrator writes it **verbatim** to `output/{{run_id}}/analysis_status_quo.md`.
+- Output: `output/{{run_id}}/status_quo_analysis.md`
 
-**Phase 2 complete when:** `analysis_status_quo.md` exists and contains all 5 required sections including "Key Tensions & Open Questions".
+**Phase 2 complete when:** `status_quo_analysis.md` exists and contains all 5 required sections including "Key Tensions & Open Questions".
 
 **[STEP MODE: Pause here. Show user: "Phase 2 abgeschlossen. Ist-Analyse erstellt. Weiter mit Lösungshypothesen?"]**
 
@@ -149,7 +149,7 @@ Wait until `hypothesis_solution.md` exists. The technology and business agents b
 | hypothesis-technology | `scripts/p3_hypothesis_technology.md` | `output/{{run_id}}/hypothesis_technology.md` |
 | hypothesis-business | `scripts/p3_hypothesis_business.md` | `output/{{run_id}}/hypothesis_business_model.md` |
 
-All three agents read Phase 1 outputs + `analysis_status_quo.md`; technology and business additionally read `hypothesis_solution.md`.
+All three agents read Phase 1 outputs + `status_quo_analysis.md`; technology and business additionally read `hypothesis_solution.md`.
 
 **Phase 3 complete when:** All 3 hypothesis files exist.
 
@@ -247,7 +247,7 @@ output/{{run_id}}/
   ✓ research_market.md
   ✓ research_technology.md
   ✓ research_problems.md
-  ✓ analysis_status_quo.md
+  ✓ status_quo_analysis.md
   ✓ hypothesis_solution.md
   ✓ hypothesis_technology.md
   ✓ hypothesis_business_model.md

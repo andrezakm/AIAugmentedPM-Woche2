@@ -61,7 +61,7 @@ Die drei Research-Ergebnisse werden zusammengeführt und **im Hinblick auf den s
 - Welche Probleme adressiert unsere Lösungsrichtung — und welche nicht?
 - Wo liegen Lücken, Risiken, blinde Flecken?
 
-Zwischendokument: `analysis_status_quo.md`
+Zwischendokument: `status_quo_analysis.md`
 
 ---
 
@@ -147,7 +147,7 @@ flowchart TD
     INPUT --> R2["Research: Technologie\nresearch_technology.md"]
     INPUT --> R3["Research: Kernprobleme\nresearch_problems.md"]
 
-    R1 & R2 & R3 --> IST["Ist-Analyse\nanalysis_status_quo.md"]
+    R1 & R2 & R3 --> IST["Ist-Analyse\nstatus_quo_analysis.md"]
 
     IST --> H1["Hypothese: Lösung\nhypothesis_solution.md"]
     IST --> H2["Hypothese: Technik\nhypothesis_technology.md"]

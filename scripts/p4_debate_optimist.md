@@ -77,5 +77,7 @@ Write in **{{language}}** to: `output/{{run_id}}/debate_round_1.md`
 - Do not invent positive evidence — if the research is thin, acknowledge it but argue why it's not disqualifying
 - Be genuinely persuasive, not just positive
 
-## If writing the file is refused
-Claude Code may refuse `Write` calls from subagents for some file names ("Subagents should return findings as text…"). If that happens: do not rename the file and do not use the shell. Return the complete document as your final message instead — the orchestrator writes it verbatim to the path above.
+## Output handling
+Write (or append) your output to the file named above, exactly as instructed — this is the normal case. Your final message is then a **short confirmation only**: the file path and the list of sections you produced. Do **not** repeat the document in your final message; the orchestrator must not have to write it again.
+
+Only if your `Write` call is actually refused with "Subagents should return findings as text…" (Claude Code blocks some file names for subagents): do not rename the file and do not use the shell. Return the complete document as your final message instead, starting with the line `WRITE REFUSED — full document follows`, so the orchestrator writes it verbatim to the path above.
